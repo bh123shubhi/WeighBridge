@@ -7,54 +7,38 @@
     </div>
 </div>
 <!-- /page header --> 
-<?php
-$heading=isset($result['value']['id'])?'Edit MCD Owned Vehicle':'Add MCD Owned Vehicle';
-?>
 <!-- Content area -->
 <div class="content"> 
 
     <!-- Main Form -->
     <div class="card">
         <div class="card-header bg-white header-elements-inline">
-            <h6 class="card-title"><?php echo $heading; ?></h6>
+            <h6 class="card-title">View MCD Owned Vehicle</h6>
             <div class="header-elements">
                 <div class="list-icons"> <a class="list-icons-item" data-action="collapse"></a> <a class="list-icons-item" data-action="reload"></a> </div>
             </div>
         </div>
         <div class="card-body">
-            <div class="container-fluid">
-                <?php
-                if (isset($this->session->flashdata('temp_data')['color']) || isset($this->session->flashdata('temp_data')['msg']) || !empty(validation_errors())) {
-                    $color = $this->session->flashdata('temp_data')['color'];
-                    $msg = $this->session->flashdata('temp_data')['msg'];
-                    ?>
-                    <div class="<?php echo $color; ?>" <?php if (!empty($color) && !empty($msg))  ?>>
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>                
-                        <?php echo validation_errors(); ?>
-                        <?php echo $msg; ?>
-                    </div>
-                <?php } ?>
-            </div>
             <form class="" action="<?php echo site_url('master') . $url; ?>" method="post">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Registration No. <span class="text-danger">*</span></label>
-                            <input class="form-control text-uppercase" type="text" name="registration_no" placeholder="Enter Registration No." value="<?php echo isset($result['value']['registration_no']) ? $result['value']['registration_no'] : ''; ?>" required>
+                            <input class="form-control text-uppercase" type="text" name="registration_no" placeholder="Enter Registration No." value="<?php echo isset($result['value']['registration_no']) ? $result['value']['registration_no'] : ''; ?>" readonly required>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Registration Valid upto:</label>
-                            <input type="text" class="form-control pickadate-accessibility" name="registration_date" placeholder="Enter Registration Date&hellip;" value="<?php echo isset($result['value']['registration_date']) ? date('d M,Y', strtotime($result['value']['registration_date'])) : ''; ?>" required>
+                            <input type="text" class="form-control pickadate-accessibility" name="registration_date" placeholder="Enter Registration Date&hellip;" value="<?php echo isset($result['value']['registration_date']) ? date('d M,Y', strtotime($result['value']['registration_date'])) : ''; ?>" disabled required>
                         </div>
 
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Purchase Date:</label>
-                            <input type="text" class="form-control pickadate-accessibility" name="purchase_date" placeholder="Enter Purchase Date&hellip;" value="<?php echo isset($result['value']['purchase_date']) ? date('d M,Y', strtotime($result['value']['purchase_date'])) : ''; ?>" required>
+                            <input type="text" class="form-control pickadate-accessibility" name="purchase_date" placeholder="Enter Purchase Date&hellip;" value="<?php echo isset($result['value']['purchase_date']) ? date('d M,Y', strtotime($result['value']['purchase_date'])) : ''; ?>" disabled required>
                         </div>
                     </div>
                 </div>
@@ -62,7 +46,7 @@ $heading=isset($result['value']['id'])?'Edit MCD Owned Vehicle':'Add MCD Owned V
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Base Zone: <span class="text-danger">*</span></label>
-                            <select data-placeholder="Enter Base Zone" class="form-control select-search" name="zone_id" data-fouc >
+                            <select data-placeholder="Enter Base Zone" class="form-control select-search" name="zone_id" data-fouc disabled>
                                 <option></option>
                                 <?php
                                 if (isset($result['value']['zone_id'])) {
@@ -85,7 +69,7 @@ $heading=isset($result['value']['id'])?'Edit MCD Owned Vehicle':'Add MCD Owned V
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Fleet Operator Name: <span class="text-danger">*</span></label>
-                            <select data-placeholder="Enter Fleet Operator Name" class="form-control select-search" name="fleet_operator_id" data-fouc>
+                            <select data-placeholder="Enter Fleet Operator Name" class="form-control select-search" name="fleet_operator_id" data-fouc disabled>
                                 <option></option>
                                 <?php
                                 if (isset($result['value']['fleet_operator_id'])) {
@@ -108,7 +92,7 @@ $heading=isset($result['value']['id'])?'Edit MCD Owned Vehicle':'Add MCD Owned V
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Make & Model</label>
-                            <input class="form-control" type="text" name="model" placeholder="Enter Make & Model" value="<?php echo isset($result['value']['model']) ? $result['value']['model'] : ''; ?>">
+                            <input class="form-control" type="text" name="model" placeholder="Enter Make & Model" value="<?php echo isset($result['value']['model']) ? $result['value']['model'] : ''; ?>" readonly>
                         </div>
 
                     </div>
@@ -117,7 +101,7 @@ $heading=isset($result['value']['id'])?'Edit MCD Owned Vehicle':'Add MCD Owned V
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Garbage Category</label>
-                            <select data-placeholder="Type of Garbage" class="form-control select-search" name="garbage_id" data-fouc>
+                            <select data-placeholder="Type of Garbage" class="form-control select-search" name="garbage_id" data-fouc disabled>
                                 <option></option>
                                 <?php
                                 if (isset($result['value']['garbage_id'])) {
@@ -140,13 +124,13 @@ $heading=isset($result['value']['id'])?'Edit MCD Owned Vehicle':'Add MCD Owned V
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Tare Weight</label>
-                            <input class="form-control" type="text" name="tareweight" placeholder="Enter Tare Weight" value="<?php echo isset($result['value']['tareweight']) ? $result['value']['tareweight'] : ''; ?>">
+                            <input class="form-control" type="text" name="tareweight" placeholder="Enter Tare Weight" value="<?php echo isset($result['value']['tareweight']) ? $result['value']['tareweight'] : ''; ?>" readonly>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Capacity</label>
-                            <input class="form-control" type="text" name="capacity" placeholder="Enter Capacity Weight" value="<?php echo isset($result['value']['capacity']) ? $result['value']['capacity'] : ''; ?>">
+                            <input class="form-control" type="text" name="capacity" placeholder="Enter Capacity Weight" value="<?php echo isset($result['value']['capacity']) ? $result['value']['capacity'] : ''; ?>" readonly>
                         </div>
                     </div>
                 </div>
@@ -155,14 +139,14 @@ $heading=isset($result['value']['id'])?'Edit MCD Owned Vehicle':'Add MCD Owned V
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>OBU Id(GPS Device)</label>
-                            <input class="form-control" type="text" name="obu_id" placeholder="Enter OBU Id" value="<?php echo isset($result['value']['obu_id']) ? $result['value']['obu_id'] : ''; ?>">
+                            <input class="form-control" type="text" name="obu_id" placeholder="Enter OBU Id" value="<?php echo isset($result['value']['obu_id']) ? $result['value']['obu_id'] : ''; ?>" readonly>
                         </div>
 
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Status</label>
-                            <select data-placeholder="Vehicle Status" name="vehicle_status" class="form-control select-search" data-fouc>
+                            <select data-placeholder="Vehicle Status" name="vehicle_status" class="form-control select-search" data-fouc disabled>
                                 <option></option>
                                 <?php
                                 if (isset($result['value']['vehicle_status'])) {
@@ -178,13 +162,6 @@ $heading=isset($result['value']['id'])?'Edit MCD Owned Vehicle':'Add MCD Owned V
 ?>
 
                             </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-primary legitRipple">Submit <i class="icon-paperplane ml-2"></i></button>
                         </div>
                     </div>
                 </div>

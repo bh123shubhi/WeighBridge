@@ -61,8 +61,12 @@
               <td><?php echo $value['out_time'];?></td>
               <td>Rajesh</td>
               <td class="text-center"><div class="list-icons">
-                  <div class="dropdown"> <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu9"></i> </a>
-                    <div class="dropdown-menu dropdown-menu-right"> <a href="#" class="dropdown-item"><i class="icon-eye"></i> View</a> <a href="#" class="dropdown-item"><i class="icon-printer2"></i> Print Slip Again</a> </div>
+                  <div class="dropdown"> 
+                  <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu9"></i> </a>
+                  <div class="dropdown-menu dropdown-menu-right"> 
+                  <a href="<?php echo site_url('vehicle') . '/view_vehicle' .'/'.$value['slipno'].'/'.$value['key_entry_type']; ?>" class="dropdown-item"><i class="icon-eye"></i> View</a> 
+                  <a href="#" class="dropdown-item"><i class="icon-printer2"></i> Print Slip Again</a> 
+                  </div>
                   </div>
                 </div></td>
             </tr>

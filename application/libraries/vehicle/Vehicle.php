@@ -8,11 +8,7 @@ class Vehicle {
 
     public function __construct() {
         $this->CI = & get_instance();
-
-        $this->CI->load->model('vehicle/Vehicle_Model', 'vehimodelObj');
-
-         
-    
+        $this->CI->load->model('vehicle/Vehicle_Model', 'vehimodelObj'); 
     }
 
     public function show_vehicle_no() {
@@ -113,5 +109,10 @@ class Vehicle {
     public function getmcdzonemasterlist(){
         $result = $this->CI->vehimodelObj->getmcdzonemasterlist();
         return $result;  
+    }
+
+    public function show_single_vehicle($slipno,$entrytype){
+        $result = $this->CI->vehimodelObj->show_single_vehicle($slipno,$entrytype);
+        return $result;   
     }
 }

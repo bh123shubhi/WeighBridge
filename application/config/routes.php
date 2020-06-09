@@ -69,3 +69,4 @@ $route['vehicle/save_vehicle_exit']='vehicle/ExitVehicleController/save_vehicle_
 
 //vehicle register
 $route['vehicle/vehicle_register']='vehicle/ListVehicleController/vehicle_register';
+$route['vehicle/view_vehicle/(:any)/(:any)']='vehicle/ListVehicleController/view_vehicle/$1/$2';

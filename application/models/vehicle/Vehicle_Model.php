@@ -13,7 +13,8 @@ class Vehicle_Model extends CI_Model {
     }
     
     public function show_vehicle_no(){
-       $query="select registration_no,'mcd' as type from tbl_mcd_own_vehicle_details UNION select registration_no,'private' as type from tbl_private_vehicle_details";
+        $currentdate=date('Y-m-d');
+       $query="select registration_no,'mcd' as type from tbl_mcd_own_vehicle_details where registration_date >= '".$currentdate."' UNION select registration_no,'private' as type from tbl_private_vehicle_details where registration_date >= '".$currentdate."'";
        $result=$this->db->query($query)->result_array();
        return $result;
     }
@@ -231,12 +232,14 @@ class Vehicle_Model extends CI_Model {
         $resultArray=$this->db->query($sql)->result_array();
         if(count($resultArray)>0){
             foreach($resultArray as $key=>$value){
+                $finalArr[$key]['vehicle_id']=$value['vehicle_id'];
                 $finalArr[$key]['vehicle_no']=$this->getVehicleNo($value['vehicle_id'],$value['vehicle_type']);
                 $outVehicledetails=$this->getOutVehicledetails($finalArr[$key]['vehicle_no'],$value['vehicle_type'],$value['entry_type'],$value['id']);
                 $finalArr[$key]['slipno']=$value['slipno'];
                 $finalArr[$key]['fleet_agency_name']=$value['vehicle_type']=='MCD'?$value['fleet_operator']:$value['agency'];
                 $finalArr[$key]['zone_coming_from']=$this->getZone($value['zone_coming_id']);
                 $finalArr[$key]['entry_type']=$value['entry_type'];
+                $finalArr[$key]['key_entry_type']=str_replace(' ','_',$value['entry_type']);
                 $finalArr[$key]['garbage_category']=$this->getgarbage($value['garbage_type_id']);
                 $finalArr[$key]['in_weight']=$value['entry_type']=='Empty Entry'?$value['tare_weight']:$value['gross_weight'];
                 $finalArr[$key]['out_weight']=$value['entry_type']=='Empty Entry'?$outVehicledetails['grossweight']:$outVehicledetails['emptyweight'];
@@ -270,6 +273,29 @@ class Vehicle_Model extends CI_Model {
         $this->db->select('garbage');
         $result=$this->db->get_where('tbl_master_garbage',array('id'=>$garbagid))->row_array();
         return $result['garbage'];   
+    }
+
+    public function show_single_vehicle($slipno,$entrytype){
+        $finalArr=[];
+        $tbl=$entrytype =='Empty Entry'?'tbl_empty_vehicle_entry':'tbl_vehicle_entry';
+        $sql="Select * from ".$tbl." where slipno= '".$slipno."' and entry_type='".$entrytype."'";
+        $resultArray=$this->db->query($sql)->row_array();
+        if(count($resultArray)>0){
+                $finalArr['vehicle_no']=$this->getVehicleNo($resultArray['vehicle_id'],$resultArray['vehicle_type']);
+                $outVehicledetails=$this->getOutVehicledetails($resultArray['vehicle_no'],$resultArray['vehicle_type'],$resultArray['entry_type'],$resultArray['id']);
+                $finalArr['slipno']=$resultArray['slipno'];
+                $finalArr['fleet_agency_name']=$resultArray['vehicle_type']=='MCD'?$resultArray['fleet_operator']:$resultArray['agency'];
+                $finalArr['zone_coming_from']=$this->getZone($resultArray['zone_coming_id']);
+                $finalArr['entry_type']=$resultArray['entry_type'];
+                $finalArr['garbage_category']=$this->getgarbage($resultArray['garbage_type_id']);
+                $finalArr['in_weight']=$resultArray['entry_type']=='Empty Entry'?$resultArray['tare_weight']:$resultArray['gross_weight'];
+                $finalArr['out_weight']=$resultArray['entry_type']=='Empty Entry'?$outVehicledetails['grossweight']:$outVehicledetails['emptyweight'];
+                $finalArr['in_time']=!empty($resultArray['timestamp'])?date('m/d/Y h:i A',strtotime($resultArray['timestamp'])):'';
+                $finalArr['out_time']=!empty($outVehicledetails['timestamp'])?date('m/d/Y h:i A',strtotime($outVehicledetails['timestamp'])):'';
+        }else{
+          $finalArr=[];  
+        }
+        return $finalArr;
     }
 }
 

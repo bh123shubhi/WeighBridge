@@ -710,6 +710,21 @@ class HomeController extends CI_Controller {
                     }
                 }
                 break;
+        case 'master/vehicle/view_private_vehicle':
+            if (!empty($action)) {
+                $result = $this->vehiclemaster->getsingleprivatevehicle($param);
+                $data['result'] = $result;
+                $data['agencyArr'] = $this->vehiclemaster->getagencymasterlist();
+                $data['garbageArr'] = $this->vehiclemaster->getgarbagemasterlist();
+                $this->load->view('welcome_message', $data);
+            }else{
+                $data['result']=$this->vehiclemaster->getsingleprivatevehicle($param);
+                $data['result'] = $result;
+                $data['agencyArr'] = $this->vehiclemaster->getagencymasterlist();
+                $data['garbageArr'] = $this->vehiclemaster->getgarbagemasterlist();
+                $this->load->view('welcome_message', $data);
+            }
+            break;
             case 'master/vehicle/mcd_vehicle_list':
                 if (!empty($action)) {
                     if ($action == 'delete' && $param > 0) {
@@ -833,6 +848,21 @@ class HomeController extends CI_Controller {
                     }
                 }
                 break;
+            case 'master/vehicle/view_mcd_vehicle':
+            if (!empty($action)) {
+                $data['result']=$this->vehiclemaster->getsinglemcdvehicle($param);
+                $data['zoneArr'] = $this->vehiclemaster->getmcdzonemasterlist();
+                $data['garbageArr'] = $this->vehiclemaster->getgarbagemasterlist();
+                $data['fleetArr'] = $this->vehiclemaster->getfleetmasterlist();
+                $this->load->view('welcome_message', $data);
+            }else{
+                $data['result']=$this->vehiclemaster->getsinglemcdvehicle($param);
+                $data['zoneArr'] = $this->vehiclemaster->getmcdzonemasterlist();
+                $data['garbageArr'] = $this->vehiclemaster->getgarbagemasterlist();
+                $data['fleetArr'] = $this->vehiclemaster->getfleetmasterlist();
+                $this->load->view('welcome_message', $data);
+            }
+            break;
             case 'master/operator/operator_list':
                 if (!empty($action)) {
                     if ($action == 'delete' && $param > 0) {

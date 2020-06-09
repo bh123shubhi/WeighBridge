@@ -80,7 +80,7 @@
                         <td class="text-center"><div class="list-icons">
                                 <div class="dropdown"> <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu9"></i> </a>
                                     <div class="dropdown-menu dropdown-menu-right"> 
-                                        <a href="<?php echo site_url('master') . '/vehicle/add_private_vehicle/view/' . $value['id']; ?>" class="dropdown-item"><i class="icon-eye"></i> View</a> 
+                                        <a href="<?php echo site_url('master') . '/vehicle/view_private_vehicle/view/' . $value['id']; ?>" class="dropdown-item"><i class="icon-eye"></i> View</a> 
                                         <a href="<?php echo site_url('master') . '/vehicle/add_private_vehicle/edit/' . $value['id']; ?>" class="dropdown-item"><i class="icon-pencil"></i> Edit</a>
                                         <a href="<?php echo site_url('master') . '/vehicle/private_vehicle_list/delete/' . $value['id']; ?>" class="dropdown-item"><i class="icon-arrow-down7"></i> <?php echo $btnstatus; ?></a> 
                                     </div>

@@ -18,4 +18,14 @@ class ListVehicleController extends CI_Controller {
         $this->load->view('welcome_message', $data);
     }
 
+    public function view_vehicle($slipno,$entrytype){
+        $entry_type=str_replace('_',' ',$entrytype);
+        $data['page'] = '/vehicle/view_vehicle';
+        $data['result']=$this->vehicle->show_single_vehicle($slipno,$entry_type);
+        // echo '<pre>';
+        // print_r($data);
+        // die;
+        $this->load->view('welcome_message', $data);  
+    }
+
 }

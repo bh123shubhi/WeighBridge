@@ -8,54 +8,38 @@
 </div>
 <!-- /page header --> 
 <!-- Content area -->
-<?php
-$heading=isset($result['value']['id'])?'Edit Private Vehicle':'Add Private Vehicle';
-?>
 <div class="content"> 
 
     <!-- Main Form -->
     <div class="card">
         <div class="card-header bg-white header-elements-inline">
-                <h6 class="card-title"><?php echo $heading; ?></h6>
+                <h6 class="card-title">View Private Vehicle</h6>
 
             <div class="header-elements">
                 <div class="list-icons"> <a class="list-icons-item" data-action="collapse"></a> <a class="list-icons-item" data-action="reload"></a> </div>
             </div>
         </div>
         <div class="card-body">
-            <div class="container-fluid">
-                <?php
-                if (isset($this->session->flashdata('temp_data')['color']) || isset($this->session->flashdata('temp_data')['msg']) || !empty(validation_errors())) {
-                    $color = $this->session->flashdata('temp_data')['color'];
-                    $msg = $this->session->flashdata('temp_data')['msg'];
-                    ?>
-                    <div class="<?php echo $color; ?>" <?php if (!empty($color) && !empty($msg))  ?>>
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>                
-                        <?php echo validation_errors(); ?>
-                        <?php echo $msg; ?>
-                    </div>
-                <?php } ?>
-            </div>
-            <form class="" action="<?php echo site_url('master') . $url; ?>" method="post">
+            <form class="" action="" method="post">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Registration No. <span class="text-danger">*</span></label>
-                            <input class="form-control text-uppercase" type="text" name="registration_no" placeholder="Enter Registration No." value="<?php echo isset($result['value']['registration_no']) ? $result['value']['registration_no'] : ''; ?>" required>
+                            <input class="form-control text-uppercase" type="text" name="registration_no" placeholder="Enter Registration No." value="<?php echo isset($result['value']['registration_no']) ? $result['value']['registration_no'] : ''; ?>" readonly required>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Registration Valid upto:</label>
-                            <input type="text" class="form-control pickadate-accessibility" name="registration_date" placeholder="Enter Registration Date&hellip;" value="<?php echo isset($result['value']['registration_date']) ? $result['value']['registration_date'] : ''; ?>" required>
+                            <input type="text" class="form-control pickadate-accessibility" name="registration_date" placeholder="Enter Registration Date&hellip;" value="<?php echo isset($result['value']['registration_date']) ? date('d M,Y', strtotime($result['value']['registration_date'])) : ''; ?>" disabled required>
                         </div>
 
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Purchase Date:</label>
-                            <input type="text" class="form-control pickadate-accessibility" name="purchase_date" placeholder="Enter Purchase Date&hellip;" value="<?php echo isset($result['value']['purchase_date']) ? $result['value']['purchase_date'] : ''; ?>" required>
+                            <input type="text" class="form-control pickadate-accessibility" name="purchase_date" placeholder="Enter Purchase Date&hellip;" value="<?php echo isset($result['value']['purchase_date']) ? date('d M,Y', strtotime($result['value']['purchase_date'])) : ''; ?>" disabled required>
                         </div>
                     </div>
                 </div>
@@ -63,7 +47,7 @@ $heading=isset($result['value']['id'])?'Edit Private Vehicle':'Add Private Vehic
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Agency Name: <span class="text-danger">*</span></label>
-                            <select data-placeholder="Enter Fleet Operator Name" class="form-control select-search" name="agency_id" data-fouc>
+                            <select data-placeholder="Enter Fleet Operator Name" class="form-control select-search" name="agency_id" data-fouc disabled>
                                 <option></option>
                                 <?php
                                 if (isset($result['value']['agency_id'])) {
@@ -86,7 +70,7 @@ $heading=isset($result['value']['id'])?'Edit Private Vehicle':'Add Private Vehic
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Make & Model</label>
-                            <input class="form-control" type="text" name="model" value="<?php echo isset($result['value']['model']) ? $result['value']['model'] : ''; ?>" placeholder="Enter Make & Model">
+                            <input class="form-control" type="text" name="model" value="<?php echo isset($result['value']['model']) ? $result['value']['model'] : ''; ?>" placeholder="Enter Make & Model" readonly>
                         </div>
 
                     </div>
@@ -95,7 +79,7 @@ $heading=isset($result['value']['id'])?'Edit Private Vehicle':'Add Private Vehic
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Garbage Category</label>
-                            <select data-placeholder="Type of Garbage" class="form-control select-search" name="garbage_id" data-fouc>
+                            <select data-placeholder="Type of Garbage" class="form-control select-search" name="garbage_id" data-fouc disabled>
                                 <option></option>
                                 <?php
                                 if (isset($result['value']['garbage_id'])) {
@@ -118,13 +102,13 @@ $heading=isset($result['value']['id'])?'Edit Private Vehicle':'Add Private Vehic
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Tare Weight</label>
-                            <input class="form-control" type="text" name="tareweight" value="<?php echo isset($result['value']['tareweight']) ? $result['value']['tareweight'] : ''; ?>" placeholder="Enter Tare Weight">
+                            <input class="form-control" type="text" name="tareweight" value="<?php echo isset($result['value']['tareweight']) ? $result['value']['tareweight'] : ''; ?>" placeholder="Enter Tare Weight" readonly>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Capacity</label>
-                            <input class="form-control" type="text" name="capacity" value="<?php echo isset($result['value']['capacity']) ? $result['value']['capacity'] : ''; ?>" placeholder="Enter Capacity Weight">
+                            <input class="form-control" type="text" name="capacity" value="<?php echo isset($result['value']['capacity']) ? $result['value']['capacity'] : ''; ?>" placeholder="Enter Capacity Weight" readonly>
                         </div>
                     </div>
                 </div>
@@ -133,14 +117,14 @@ $heading=isset($result['value']['id'])?'Edit Private Vehicle':'Add Private Vehic
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Trip Time (In Minutes)</label>
-                            <input class="form-control" type="number" name="triptime" value="<?php echo isset($result['value']['triptime']) ? $result['value']['triptime'] : ''; ?>" placeholder="Enter Trip Time (In Min.)">
+                            <input class="form-control" type="number" name="triptime" value="<?php echo isset($result['value']['triptime']) ? $result['value']['triptime'] : ''; ?>" placeholder="Enter Trip Time (In Min.)" readonly>
                         </div>
 
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Status</label>
-                            <select data-placeholder="Vehicle Status" class="form-control select-search" name="vehicle_status" data-fouc>
+                            <select data-placeholder="Vehicle Status" class="form-control select-search" name="vehicle_status" data-fouc disabled>
                                 <option></option>
                                 <?php
                                 if (isset($result['value']['vehicle_status'])) {
@@ -155,13 +139,6 @@ $heading=isset($result['value']['id'])?'Edit Private Vehicle':'Add Private Vehic
 
 
                             </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-primary legitRipple">Submit <i class="icon-paperplane ml-2"></i></button>
                         </div>
                     </div>
                 </div>
