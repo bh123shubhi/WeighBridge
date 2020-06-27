@@ -46,7 +46,19 @@
           </thead>
           <tbody>
           <?php
-          foreach($result as $key=>$value){?>
+          foreach($result as $key=>$value){
+            $postData = base64_encode(json_encode([
+               "vehicle_no"=>$value['vehicle_no'],
+              "zone"=>$value['zone_coming_from'],
+              "garbage"=>$value['garbage_category'],
+              "entry_type"=>$value['entry_type'],
+              "entry_time"=>$value['in_time'],
+              "exit_time"=>$value['out_time'],
+              "in_weight"=>$value['in_weight'],
+              "out_weight"=>$value['out_weight'],
+               "src"=>'reg',
+            ]
+          ));?>
             <tr>
               <td><?php echo $key+1;?></td>
               <td><?php echo $value['vehicle_no'];?></td>
@@ -65,7 +77,8 @@
                   <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu9"></i> </a>
                   <div class="dropdown-menu dropdown-menu-right"> 
                   <a href="<?php echo site_url('vehicle') . '/view_vehicle' .'/'.$value['slipno'].'/'.$value['key_entry_type']; ?>" class="dropdown-item"><i class="icon-eye"></i> View</a> 
-                  <a href="#" class="dropdown-item"><i class="icon-printer2"></i> Print Slip Again</a> 
+                  <a  href="<?php echo base_url()?>vehicle/rendersliporprint/<?php echo $postData;?>" 
+                  data- class="dropdown-item"><i class="icon-printer2"></i> Print Slip Again</a> 
                   </div>
                   </div>
                 </div></td>

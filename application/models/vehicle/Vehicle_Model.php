@@ -116,7 +116,12 @@ class Vehicle_Model extends CI_Model {
     }
     public function show_exit_vehicle_no(){
        
-        $resultArray = $this->db->query("select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,Max(entry_type) as entry_type from tbl_vehicle_entry where vehicle_in_status='IN' group by vehicle_no union select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,Max(entry_type) as entry_type from tbl_empty_vehicle_entry where vehicle_in_status='IN' group by vehicle_no")->result_array();
+        $resultArray = $this->db->query("select t1.id,t1.vehicle_no,t1.vehicle_type,t1.entry_type,t2.registration_date,t1.slipno,t3.garbage,t4.zone,t1.entry_time from (select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,Max(entry_type) as entry_type,max(slipno) as slipno,max(zone_coming_id) as zone_id,max(garbage_type_id) as garbage_id,max(timestamp) as entry_time from tbl_vehicle_entry where vehicle_in_status='IN' group by vehicle_no union select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,Max(entry_type) as entry_type,max(slipno) as slipno,max(zone_coming_id) as zone_id,max(garbage_type_id) as garbage_id,max(timestamp) as entry_time  from tbl_empty_vehicle_entry where vehicle_in_status='IN' group by vehicle_no) as t1 inner join tbl_private_vehicle_details as t2 on t1.vehicle_no=t2.registration_no left join tbl_master_garbage as t3 on t1.garbage_id = t3.id left join tbl_master_zone as t4 on 
+            t1.zone_id=t4.id
+            union 
+            select t1.id,t1.vehicle_no,t1.vehicle_type,t1.entry_type,t2.registration_date,t1.slipno,
+            t3.garbage,t4.zone,t1.entry_time from (select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,Max(entry_type) as entry_type,max(slipno) as slipno,max(zone_coming_id) as zone_id,max(garbage_type_id) as garbage_id,max(timestamp) as entry_time from tbl_vehicle_entry where vehicle_in_status='IN' group by vehicle_no union select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,Max(entry_type) as entry_type,max(slipno) as slipno,max(zone_coming_id) as zone_id,max(garbage_type_id) as garbage_id,max(timestamp) as entry_time  from tbl_empty_vehicle_entry where vehicle_in_status='IN' group by vehicle_no) as t1 inner join tbl_mcd_own_vehicle_details as t2 on t1.vehicle_no=t2.registration_no left join tbl_master_garbage as t3 on t1.garbage_id = t3.id left join tbl_master_zone as t4 on 
+            t1.zone_id=t4.id")->result_array();
         return $resultArray;
 
     }
@@ -130,16 +135,19 @@ class Vehicle_Model extends CI_Model {
 
                    $exit__vehiicle_id=$this->db->insert_id();
                    if($exit__vehiicle_id>0){
-                    if($exitVehicleArr['entry_type']=='Empty Entry'){
-                        $arr=array('vehicle_in_status'=>'OUT');
-                        $this->db->where(array('id'=>$exitVehicleArr['vehicle_entry_id'],'vehicle_type'=>$exitVehicleArr['vehicle_type']));
-                        $result['status']=$this->db->update('tbl_empty_vehicle_entry',$arr);
-                    }else{
-                        $arr=array('vehicle_in_status'=>'OUT');
-                        $this->db->where(array('id'=>$exitVehicleArr['vehicle_entry_id'],'vehicle_type'=>$exitVehicleArr['vehicle_type']));
-                        $result['status']=$this->db->update('tbl_vehicle_entry',$arr);
-                        $result['status'] =  $this->db->where("id",$exitVehicleArr['vehicle_entry_id']);$this->db->update("tbl_vehicle_entry",["vehicle_in_status"=>"OUT"]);
-                    }                            
+                        $result['exit_time'] = $exitVehicleArr['timestamp'];
+                        $result['grossweight'] = $exitVehicleArr['gross_weight'];
+                        $result['tare_weight'] = $exitVehicleArr['tare_weight'];
+                        if($exitVehicleArr['entry_type']=='Empty Entry'){
+                            $arr=array('vehicle_in_status'=>'OUT');
+                            $this->db->where(array('id'=>$exitVehicleArr['vehicle_entry_id'],'vehicle_type'=>$exitVehicleArr['vehicle_type']));
+                            $result['status']=$this->db->update('tbl_empty_vehicle_entry',$arr);
+                        }else{
+                            $arr=array('vehicle_in_status'=>'OUT');
+                            $this->db->where(array('id'=>$exitVehicleArr['vehicle_entry_id'],'vehicle_type'=>$exitVehicleArr['vehicle_type']));
+                            $result['status']=$this->db->update('tbl_vehicle_entry',$arr);
+                            $result['status'] =  $this->db->where("id",$exitVehicleArr['vehicle_entry_id']);$this->db->update("tbl_vehicle_entry",["vehicle_in_status"=>"OUT"]);
+                        }                            
                       $result['msg'] = "Vehicle Exit Successfully";
                    }
 

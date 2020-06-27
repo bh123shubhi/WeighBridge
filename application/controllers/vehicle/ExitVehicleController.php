@@ -27,6 +27,7 @@ class ExitVehicleController extends CI_Controller {
         $data['page'] = '/vehicle/vehicle_exit';
 
         $data['result']=$this->vehicle->show_exit_vehicle_no();
+        // echo "<pre>";print_r($data['result']);die;
          $data['entry']=$this->flipentryType;
         $data['url']='/save_vehicle_exit';
      
@@ -39,7 +40,6 @@ class ExitVehicleController extends CI_Controller {
     // }
 
     public function save_vehicle_exit(){
-
          $vehicle_no_exit = $this->input->post('exit_vehicle_no',TRUE);
          $emptyweight=$this->input->post('emptyweight',TRUE);
          $grossweight=$this->input->post('grossweight',TRUE);
@@ -64,24 +64,47 @@ class ExitVehicleController extends CI_Controller {
             $vehicle_exit_arr['emptyweight'] = $empty_weight;
          }
          $insertresult = $this->vehicle->save_exit_vehicle($vehicle_exit_arr);
+         $data['result']=$this->vehicle->show_exit_vehicle_no();
+         $data['entry']=$this->flipentryType;
          if($insertresult['status']==true){
             $data['msg'] = $insertresult['msg'];
             $data['color'] = 'alert alert-success';
             $data['page'] = '/vehicle/vehicle_exit';
             $data['url']='/save_vehicle_exit';
-            $this->load->view('welcome_message', $data);
+            $data['status']='true';
+            $data['timestamp']=$insertresult['timestamp'];
+
+            
         }else{
             $data['msg'] = $insertresult['msg'];
             $data['color'] = 'alert alert-danger';
             $data['page'] = '/vehicle/vehicle_exit';
             $data['url']='/save_vehicle_exit';
-            $this->load->view('welcome_message', $data);
-
+            $data['status']='false';
+            $data['timestamp']='';
         }       
-
-
-
+        echo json_encode($data);
+    }
+    public function get_exit_vehicle_list(){
+        $result=$this->vehicle->show_exit_vehicle_no();
+        echo json_encode($result);
+    }
+    public function render_slip_for_print($slip_data=''){
         
+        $data['result'] = [];
+        if(!empty($slip_data)){
+            $data['result'] = json_decode(base64_decode($slip_data),true);
+            $data['result']['entry'] = array_flip($data['result']['entry']);
+            $data['result']['entry_type'] = isset(data['result']['entry'])?$data['result']['entry'][$data['result']['entry_type']]:$data['result']['entry_type'];
+        }
+        
+        $data['back_url'] = 'vehicle/vehicle_exit';
+        if(strtolower($data['result']['src'])=='reg'){
+           $data['back_url'] = 'vehicle/vehicle_register';
+        }
+    
+        $data['page'] = 'vehicle/print_slip';
+        $this->load->view("vehicle/print_slip",$data);
     }
 
 }

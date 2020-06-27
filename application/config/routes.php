@@ -71,6 +71,8 @@ $route['vehicle/save_vehicle_entryin']='vehicle/EntryVehicleController/save_vehi
 //vehicle exit
 $route['vehicle/vehicle_exit']='vehicle/ExitVehicleController/vehicle_exit';
 $route['vehicle/save_vehicle_exit']='vehicle/ExitVehicleController/save_vehicle_exit';
+$route['vehicle/getexitvehiclelist']='vehicle/ExitVehicleController/get_exit_vehicle_list';
+$route['vehicle/rendersliporprint/(:any)']='vehicle/ExitVehicleController/render_slip_for_print/$1';
 
 //vehicle register
 $route['vehicle/vehicle_register']='vehicle/ListVehicleController/vehicle_register';
