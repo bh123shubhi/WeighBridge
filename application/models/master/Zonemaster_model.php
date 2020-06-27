@@ -10,8 +10,9 @@ class Zonemaster_model extends CI_Model {
     }
 
     public function getZoneMaster() {
-        $this->db->select('*');
-        $this->db->from('tbl_master_zone');
+        $this->db->select('zone.*,user.first_name,user.last_name');
+        $this->db->from('tbl_master_zone as zone');
+        $this->db->join('tbl_master_user as user','zone.entry_by=user.id','left');
         $result = $this->db->get()->result_array();
         if (count($result) > 0) {
             return array('status' => true, 'msg' => 'Zone List Found', 'value' => $result);
@@ -28,7 +29,8 @@ class Zonemaster_model extends CI_Model {
         if (count($res) > 0) {
             $status = $res['status'];
             $new_status = $status == 'TRUE' ? 'FALSE' : 'TRUE';
-            $data = array('status' => $new_status);
+            $data = array('status' => $new_status,'entry_by'=>$this->res['value']['id']);
+            $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->where('id', $id);
             $this->db->update('tbl_master_zone', $data);
             if ($this->db->affected_rows() > 0) {
@@ -42,6 +44,8 @@ class Zonemaster_model extends CI_Model {
     }
 
     public function saveZone($data) {
+        $data['timestamp']=date('Y-m-d H:i:s');
+        $data['updated_at']=date('Y-m-d H:i:s');
         $this->db->insert('tbl_master_zone', $data);
         if ($this->db->affected_rows() > 0) {
             return $array = array('status' => true, 'msg' => 'Data Successfully Saved');
@@ -72,6 +76,7 @@ class Zonemaster_model extends CI_Model {
             $array = array('status' => false, 'msg' => 'Zone Already Exists');
             return $array;
         } else {
+            $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->where('id', $id);
             $this->db->update('tbl_master_zone', $data);
             if ($this->db->affected_rows() > 0) {

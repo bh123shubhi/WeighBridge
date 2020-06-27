@@ -57,12 +57,13 @@
                     $status = $value['status'] == 'TRUE' ? 'In-Active' : 'Active';
                     $printstatus = $value['status'] == 'TRUE' ? 'Active' : 'In-Active';
                     $class = $value['status'] == 'TRUE' ? 'badge badge-success' : 'badge badge-secondary';
+                    $by=!empty($value['first_name'])?'By':'';
                     ?>
                     <tr>
                         <td><?php echo $key + 1; ?></td>
                         <td><?php echo $value['zone']; ?></td>
                         <td><?php echo $value['zone_time']; ?></td>
-                        <td><?php echo date('d/M/Y', strtotime($value['timestamp'])); ?></td>
+                        <td><?php echo date('d/M/Y', strtotime($value['timestamp'])); ?> <?php echo $by;?> <?php echo $value['first_name'].' '.$value['last_name']; ?></td>
                         <td><span class="<?php echo $class;?>"><?php echo $printstatus; ?></span></td>
                         <td class="text-center"><div class="list-icons">
                                 <div class="dropdown"> <a href="" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu9"></i> </a>

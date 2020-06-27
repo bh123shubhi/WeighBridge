@@ -53,6 +53,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+//login
+$route['login']='login/LoginController/viewlogin';
+$route['save_login']='login/LoginController/save_login';
+$route['logout']='login/LoginController/logout';
+
 //AdminMaster
 $route['master/(:any)/(:any)'] = "master/HomeController/View/$1/$2";
 $route['master/(:any)/(:any)/(:any)'] = "master/HomeController/View/$1/$2/$3";
@@ -70,3 +75,22 @@ $route['vehicle/save_vehicle_exit']='vehicle/ExitVehicleController/save_vehicle_
 //vehicle register
 $route['vehicle/vehicle_register']='vehicle/ListVehicleController/vehicle_register';
 $route['vehicle/view_vehicle/(:any)/(:any)']='vehicle/ListVehicleController/view_vehicle/$1/$2';
+$route['dashboard'] = "dashboard/DashboardController/dashboardview";
+
+//reports
+$route['report/zone_wise_report']='report/ReportController/zone_wise_report';
+$route['report/zone_wise_list']='report/ReportController/zone_wise_list';
+$route['report/garbage_wise_report']='report/ReportController/garbage_wise_report';
+$route['report/garbage_wise_list']='report/ReportController/garbage_wise_list';
+$route['report/fleet_operator_wise_report']='report/ReportController/fleet_operator_wise_report';
+$route['report/fleet_operator_wise_list']='report/ReportController/fleet_operator_wise_list';
+$route['report/agency_wise_report']='report/ReportController/agency_wise_report';
+$route['report/agency_wise_list']='report/ReportController/agency_wise_list';
+$route['report/vehicle_wise_report']='report/ReportController/vehicle_wise_report';
+$route['report/vehicle_wise_list']='report/ReportController/vehicle_wise_list';
+
+//profile
+$route['profile']='profile/ProfileController/viewProfile';
+$route['save_profile']='profile/ProfileController/save_profile';
+$route['account_setting']='profile/ProfileController/account_setting';
+$route['save_account_setting']='profile/ProfileController/save_account_setting';

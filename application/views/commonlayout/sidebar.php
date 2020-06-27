@@ -26,8 +26,15 @@
                     <a href="#">
                         <img src="<?php echo base_url(); ?>Assets/images/placeholders/placeholder.jpg" class="img-fluid rounded-circle shadow-1 mb-3" width="80" height="80" alt="">
                     </a>
-                    <h6 class="mb-0 text-white text-shadow-dark">Rajesh Kumar</h6>
-                    <span class="font-size-sm text-white text-shadow-dark">Administrator</span>
+                    <?php
+                    $userdata=$this->session->userData('user_auth_data');
+                    if(isset($userdata) && !empty($userdata)){
+                        $user_name=$userdata['value']['first_name'].' '.$userdata['value']['last_name'];
+                        $user_type=$userdata['value']['user_type'];
+                    }
+                    ?>
+                    <h6 class="mb-0 text-white text-shadow-dark"><?php echo $user_name;?></h6>
+                    <span class="font-size-sm text-white text-shadow-dark"><?php echo $user_type;?></span>
                 </div>
 
                 <div class="sidebar-user-material-footer">
@@ -38,19 +45,19 @@
             <div class="collapse" id="user-nav">
                 <ul class="nav nav-sidebar">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="<?php echo base_url(); ?>profile" class="nav-link">
                             <i class="icon-user-plus"></i>
                             <span>My profile</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="<?php echo base_url(); ?>account_setting" class="nav-link">
                             <i class="icon-cog5"></i>
                             <span>Account settings</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="<?php echo base_url(); ?>logout" class="nav-link">
                             <i class="icon-switch2"></i>
                             <span>Logout</span>
                         </a>
@@ -68,7 +75,7 @@
                 <!-- Main -->
                 <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
                 <li class="nav-item">
-                    <a href="#!/dashboard" class="nav-link active">
+                    <a href="<?php echo base_url(); ?>dashboard" class="nav-link active">
                         <i class="icon-home4"></i>
                         <span>
                             Dashboard
@@ -89,11 +96,11 @@
 
                     <ul class="nav nav-group-sub" data-submenu-title="Reports">
 
-                        <li class="nav-item"><a href="zone_wise_report.html" class="nav-link">Zone Wise Report</a></li>
-                        <li class="nav-item"><a href="garbage_wise_report.html" class="nav-link">Garbage Category Wise Report</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Fleet Operator Report</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Agency Wise Report</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Vehicle Wise Report</a></li>
+                        <li class="nav-item"><a href="<?php echo base_url(); ?>report/zone_wise_report" class="nav-link">Zone Wise Report</a></li>
+                        <li class="nav-item"><a href="<?php echo base_url(); ?>report/garbage_wise_report" class="nav-link">Garbage Category Wise Report</a></li>
+                        <li class="nav-item"><a href="<?php echo base_url(); ?>report/fleet_operator_wise_report" class="nav-link">Fleet Operator Report</a></li>
+                        <li class="nav-item"><a href="<?php echo base_url(); ?>report/agency_wise_report" class="nav-link">Agency Wise Report</a></li>
+                        <li class="nav-item"><a href="<?php echo base_url(); ?>report/vehicle_wise_report" class="nav-link">Vehicle Wise Report</a></li>
                     </ul>
                 </li>
                 <li class="nav-item nav-item-submenu">

@@ -6,6 +6,10 @@ class EntryVehicleController extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->res = $this->common->checkLoginAuth();
+        if($this->res===false){
+            redirect(base_url()."login");
+        }
         $this->load->library('user_agent');
         $this->load->library('vehicle/Vehicle');
         $this->entryType = [
@@ -24,7 +28,6 @@ class EntryVehicleController extends CI_Controller {
         $data['zone']=$this->vehicle->show_zone();
         $data['entry'] = $this->entryType;
         $data['url']='/save_vehicle_entryin';
-
         $this->load->view('welcome_message', $data);
     }
 
@@ -54,11 +57,11 @@ class EntryVehicleController extends CI_Controller {
          //onload conditon ends
           $dataArr=[];
           $uploadpath=$_SERVER['DOCUMENT_ROOT'].'/upload/webcamimage/';
-          if(!is_dir($uploadpath)){
-              if (!mkdir($uploadpath, 0777, true)) {
-                  die('Failed to create folders...');
-              }
-          }
+        //   if(!is_dir($uploadpath)){
+        //       if (!mkdir($uploadpath, 0777, true)) {
+        //           die('Failed to create folders...');
+        //       }
+        //   }
           $file_path='';
           if(!empty($this->input->post('webcam_img_ul'))){
               $img_url=$this->input->post('webcam_img_ul');
@@ -90,9 +93,9 @@ class EntryVehicleController extends CI_Controller {
               "garbage_nature"=> $this->input->post('garbage_nature', TRUE),
               "reference" => $this->input->post('refrence', TRUE),
               "driver_id" => $this->input->post('driveid', TRUE),
+              "over_weight_flag"=>$this->input->post('over_weight_flag', TRUE),
               "webcam_imgpath"=>$file_path
           ];
-            
           if(strtolower($vehicle[1])=='mcd'){
               $dataArr["fleet_operator"] = $this->input->post('floperator', TRUE);
   
@@ -106,8 +109,7 @@ class EntryVehicleController extends CI_Controller {
           //Others or General
          
           if(!empty($dataArr['vehicle_no'])){
-              $slip_no=$this->getVehicleSlipNo();
-  
+              $slip_no=$this->getVehicleSlipNo(); 
               $dataArr['slipno'] =!empty($slip_no)?$slip_no+1:1000; 
               $form_status=$this->ValidateVehicleEntryForm($dataArr);
               if($form_status==false){
@@ -152,11 +154,9 @@ class EntryVehicleController extends CI_Controller {
               $data['url']='/save_vehicle_entryin';
               
           }
-        
-
-        
-        $this->load->view('welcome_message', $data);      
-        
+        $this->session->set_flashdata('temp_data', $data);
+        redirect(base_url() . 'vehicle/vehicle_entry');     
+        //$this->load->view('welcome_message', $data);             
     }
     public function checkVehicleIn($vehicle_no,$vehicle_type){
         $res = ['status'=>true,"msg"=>"Vehicle Entry Allow"]; //true means allow entry false means disallow entry

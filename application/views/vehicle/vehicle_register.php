@@ -59,7 +59,7 @@
               <td><?php echo $value['out_weight'];?></td>
               <td><?php echo $value['in_time'];?></td>
               <td><?php echo $value['out_time'];?></td>
-              <td>Rajesh</td>
+              <td><?php echo $value['user_name'];?></td>
               <td class="text-center"><div class="list-icons">
                   <div class="dropdown"> 
                   <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu9"></i> </a>

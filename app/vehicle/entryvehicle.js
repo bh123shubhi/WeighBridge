@@ -53,7 +53,7 @@ $(document).ready(function () {
            async: true,
            data: { vehicleno : vehiclenoArr[0] , type:vehiclenoArr[1]},
            success: function (data) {
-            console.log(data);
+            //console.log(data);
             var veharr=JSON.parse(data,true);
             var disabled = false;
             if(veharr.status==true && veharr.vehicle_entry_status==true){
@@ -68,6 +68,7 @@ $(document).ready(function () {
                   $('#floperator').val(veharr.result.fleetoperator);
                   $('#garbage').val(veharr.result.garbage_id).trigger("change");
                   $('#gabage_hid_id').val(veharr.result.garbage_id);
+                  $('#capacity').val(veharr.result.capacity);
                   var garbage=$('#garbage option:selected').text();
                   if(garbage=='Malba'||garbage=='MALBA')  {
                       $('#referencediv').show();
@@ -85,6 +86,7 @@ $(document).ready(function () {
                   $('#agency').val(veharr.result.agencyname);
                   $('#garbage').val(veharr.result.garbage_id).trigger("change");
                   $('#gabage_hid_id').val(veharr.result.garbage_id);
+                  $('#capacity').val(veharr.result.capacity);
                   var garbage=$('#garbage option:selected').text();
                   if(garbage=='Malba'||garbage=='MALBA')  {
                       $('#referencediv').show();
@@ -94,7 +96,8 @@ $(document).ready(function () {
                   else{
                       $('#referencediv').hide();    
                   }
-                  $('#floperator').attr('readonly', true);   
+                  $('#floperator').attr('readonly', true);
+                  $('#agency').attr('readonly', true); 
               }else{
                 $("#fleet_div").hide();
                 $("#agency_div").hide();
@@ -132,15 +135,21 @@ $(document).ready(function () {
       });
       $('#grossweight').show();
       $('#tareweight').hide();
+      $("#tareweight").prop('required',false);
+      $("#grossweight").prop('required',true);
       $('select[name=entrytype]').change(function(){
         if($(this).val()=='2'){
             $('#tareweight').show();
             $('#grossweight').hide();
+            $("#tareweight").prop('required',true);
+            $("#grossweight").prop('required',false);
         }else{
             $('#grossweight').show();
             $('#tareweight').hide();
+            $("#tareweight").prop('required',false);
+            $("#grossweight").prop('required',true);
         }
-      });
+      });//
        $("#entrytype").on("change",function(){
       $("#main_entry_type").val($(this).val());
     })
@@ -150,5 +159,19 @@ $(document).ready(function () {
     $("#mcdentrytype").on("change",function(){
       $("#main_entry_type").val($(this).val());
     })
+    $('#inweightbtn').show();
+    $('#overweightbtn').hide();
+    $('#grosswtvalue').on("input",function(){
+        var grosswt=$('#grosswtvalue').val();
+        var capacity=$('#capacity').val();
+        if(parseFloat(grosswt)>parseFloat(capacity)){
+            $('#over_weight_flag').val("1");
+            $('#overweightbtn').show();
+            $('#inweightbtn').hide();
+        }else{
+            $('#overweightbtn').hide();
+            $('#inweightbtn').show();
+        }
+    });
 });
 

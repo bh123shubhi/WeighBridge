@@ -6,6 +6,10 @@ class HomeController extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->res = $this->common->checkLoginAuth();
+        if($this->res===false){
+            redirect(base_url()."login");
+        }
         $this->load->library('master/admin');
         $this->load->library('user_agent');
         $this->load->library('form_validation');
@@ -15,6 +19,7 @@ class HomeController extends CI_Controller {
         $this->load->library('master/vehiclemaster');
         $this->load->library('master/agencymaster');
         $this->load->library('master/Operator');
+        date_default_timezone_set("Asia/Calcutta");
         //$this->load->model('master/admin/AdminModel', 'modelObj');
     }
 
@@ -188,6 +193,7 @@ class HomeController extends CI_Controller {
                     $status = $this->ValidatezoneMasterFormData();
                     if ($status == true) {
                         $dataArr['zone'] = $this->input->post('zone', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->zonemaster->updatezone($dataArr, $param);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -212,6 +218,7 @@ class HomeController extends CI_Controller {
                     $status = $this->ValidatezoneMasterFormData();
                     if ($status == true) {
                         $dataArr['zone'] = $this->input->post('zone', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->zonemaster->savezone($dataArr);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -278,6 +285,7 @@ class HomeController extends CI_Controller {
                     $status = $this->ValidategarbageMasterFormData();
                     if ($status == true) {
                         $dataArr['garbage'] = $this->input->post('garbage', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->garbagemaster->updategarbage($dataArr, $param);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -302,6 +310,7 @@ class HomeController extends CI_Controller {
                     $status = $this->ValidategarbageMasterFormData();
                     if ($status == true) {
                         $dataArr['garbage'] = $this->input->post('garbage', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->garbagemaster->savegarbage($dataArr);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -366,6 +375,7 @@ class HomeController extends CI_Controller {
                     $status = $this->ValidatefleetMasterFormData();
                     if ($status == true) {
                         $dataArr['fleetoperator'] = $this->input->post('fleetoperator', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->fleetmaster->updatefleet($dataArr, $param);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -390,6 +400,7 @@ class HomeController extends CI_Controller {
                     $status = $this->ValidatefleetMasterFormData();
                     if ($status == true) {
                         $dataArr['fleetoperator'] = $this->input->post('fleetoperator', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->fleetmaster->savefleet($dataArr);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -455,6 +466,7 @@ class HomeController extends CI_Controller {
                     $status = $this->ValidateagencyMasterFormData();
                     if ($status == true) {
                         $dataArr['agencyname'] = $this->input->post('agencyname', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->agencymaster->updateagency($dataArr, $param);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -479,6 +491,7 @@ class HomeController extends CI_Controller {
                     $status = $this->ValidateagencyMasterFormData();
                     if ($status == true) {
                         $dataArr['agencyname'] = $this->input->post('agencyname', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->agencymaster->saveagency($dataArr);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -547,6 +560,7 @@ class HomeController extends CI_Controller {
                     if ($status == true) {
                         $dataArr['zone_id'] = $this->input->post('zone_id', TRUE);
                         $dataArr['zone_time'] = $this->input->post('time', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->vehiclemaster->updatezonetime($dataArr, $param);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -572,6 +586,7 @@ class HomeController extends CI_Controller {
                     if ($status == true) {
                         $dataArr['zone_id'] = $this->input->post('zone_id', TRUE);
                         $dataArr['zone_time'] = $this->input->post('time', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->vehiclemaster->savezonetime($dataArr);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -657,6 +672,7 @@ class HomeController extends CI_Controller {
                         $dataArr['capacity'] = $this->input->post('capacity', TRUE);
                         $dataArr['triptime'] = $this->input->post('triptime', TRUE);
                         $dataArr['vehicle_status'] = $this->input->post('vehicle_status', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->vehiclemaster->updateprivatevehicle($dataArr, $param);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -690,6 +706,7 @@ class HomeController extends CI_Controller {
                         $dataArr['capacity'] = $this->input->post('capacity', TRUE);
                         $dataArr['triptime'] = $this->input->post('triptime', TRUE);
                         $dataArr['vehicle_status'] = $this->input->post('vehicle_status', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->vehiclemaster->saveprivatevehicle($dataArr);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -794,6 +811,7 @@ class HomeController extends CI_Controller {
                         $dataArr['capacity'] = $this->input->post('capacity', TRUE);
                         $dataArr['obu_id'] = $this->input->post('obu_id', TRUE);
                         $dataArr['vehicle_status'] = $this->input->post('vehicle_status', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->vehiclemaster->updatemcdvehicle($dataArr, $param);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];
@@ -828,6 +846,7 @@ class HomeController extends CI_Controller {
                         $dataArr['capacity'] = $this->input->post('capacity', TRUE);
                         $dataArr['obu_id'] = $this->input->post('obu_id', TRUE);
                         $dataArr['vehicle_status'] = $this->input->post('vehicle_status', TRUE);
+                        $dataArr['entry_by']=$this->res['value']['id'];
                         $result = $this->vehiclemaster->savemcdvehicle($dataArr);
                         if ($result['status'] == true) {
                             $data['msg'] = $result['msg'];

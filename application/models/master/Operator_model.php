@@ -14,6 +14,8 @@ class Operator_model extends CI_Model {
         if (count($usrname) > 0) {
             return $array = array('status' => false, 'msg' => 'UserName Already Exists');
         } else {
+            $data['timestamp']=date('Y-m-d H:i:s');
+            $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->insert('tbl_master_user', $data);
             if ($this->db->affected_rows() > 0) {
                 return $array = array('status' => true, 'msg' => 'Data Successfully Saved');
@@ -71,6 +73,7 @@ class Operator_model extends CI_Model {
         if (count($res) > 0) {
             return $array = array('status' => false, 'msg' => 'UserName Already Exists');
         } else {
+            $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->where('id', $id);
             $this->db->update('tbl_master_user', $data);
             if ($this->db->affected_rows() > 0) {
@@ -90,6 +93,7 @@ class Operator_model extends CI_Model {
             $status = $res['status'];
             $new_status = $status == 'Active' ? 'In-Active' : 'Active';
             $data=array('status'=>$new_status);
+            $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->where('id', $id);
             $this->db->update('tbl_master_user', $data);
             if ($this->db->affected_rows() > 0) {

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#operator_submit').attr('disabled','true');
+    $('#operator_submit').attr('disabled',true);
     $('#opusername_text').css('display','none');
     $("#operator_username").keyup(function(){
         var username=$("#operator_username").val();
@@ -11,10 +11,10 @@ $(document).ready(function () {
             success: function (data) {
              if(data==1){
                  $('#opusername_text').css('display','none');
-                 $('#operator_submit').attr('disabled','false');
+                 $('#operator_submit').removeAttr('disabled');
              }else{
                 $('#opusername_text').css('display','block');
-                $('#operator_submit').attr('disabled','true');
+                $('#operator_submit').attr('disabled',true);
              }
             }
         });

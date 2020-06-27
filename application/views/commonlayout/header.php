@@ -25,15 +25,21 @@
 					</a>
 				</li>
 			</ul>
-
+			<?php
+                    $userdata=$this->session->userData('user_auth_data');
+                    if(isset($userdata) && !empty($userdata)){
+                        $user_name=$userdata['value']['first_name'].' '.$userdata['value']['last_name'];
+                        $user_type=$userdata['value']['user_type'];
+                    }
+        	?>
 			<span class="navbar-text ml-md-3">
 				<span class="badge badge-mark border-orange-300 mr-2"></span>
-				Hi, Rajesh!
+				Hi, <?php echo $user_name;?>!
 			</span>
 
 			<ul class="navbar-nav ml-md-auto">
 				<li class="nav-item">
-					<a href="#" class="navbar-nav-link">
+					<a href="<?php echo base_url(); ?>logout" class="navbar-nav-link">
 						<i class="icon-switch2"></i>
 						<span class="d-md-none ml-2">Logout</span>
 					</a>

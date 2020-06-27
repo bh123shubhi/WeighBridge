@@ -63,7 +63,7 @@
                     <h6 class="card-title">Vehcile Entry</h6>
                 </div>
                 <div class="card-body  align-items-sm-center justify-content-sm-between flex-sm-wrap"> 
-                <form class="" name="save_vehicle" action="<?php echo site_url('vehicle') . $url; ?>" method="post">
+                <form class="" id="vehicleform" name="save_vehicle" action="<?php echo site_url('vehicle') . $url; ?>" method="post">
                     <input type="hidden" id="main_entry_type" name="main_entry_type"/>
                     <div class="form-group row">
                         <label class="col-form-label col-lg-3">Enter Vehicle No.</label>
@@ -174,15 +174,20 @@
                     </div>
                     <div class="form-group row" id="grossweight">
                         <label class="col-form-label col-lg-3">Gross Weight</label>
-                        <div class="col-lg-6"><input class="form-control" type="text" placeholder="Gross Weight" name="gross_weight" required></div> <div class="col-lg-3"><input type="button" class="btn btn-light bg-warning legitRipple " value="Get Weight" onClick="take_snapshot()"></div>
+                        <div class="col-lg-6"><input class="form-control" type="text" placeholder="Gross Weight" name="gross_weight" id="grosswtvalue"></div> <div class="col-lg-3"><input type="button" class="btn btn-light bg-warning legitRipple " value="Get Weight" onClick="take_snapshot()"></div>
                     </div>
                     <div class="form-group row" id="tareweight">
                         <label class="col-form-label col-lg-3">Tare Weight</label>
                         <div class="col-lg-6"><input class="form-control" type="text" name="tareweight" placeholder="Tare Weight"></div> <div class="col-lg-3"><input type="button" class="btn btn-light bg-warning legitRipple " value="Get Weight" onClick="take_snapshot()"></div>
                     </div>
                     <input class="form-control" type="hidden" name="webcam_img_ul" id="webcam_img_ul">
-                    <div class="text-right">
+                    <input class="form-control" type="hidden" name="capacity" id="capacity">
+                    <input type="hidden" id="over_weight_flag" name="over_weight_flag" value="0"/>
+                    <div class="text-right" id="inweightbtn">
                         <button type="submit" id="btn_vehicle_entry" class="btn btn-primary legitRipple">Entry <i class="icon-paperplane ml-2"></i></button>
+                    </div>
+                    <div class="text-right" id="overweightbtn">
+                        <button type="button" class="btn btn-primary legitRipple" id="over_weight">Entry <i class="icon-paperplane ml-2"></i></button>
                     </div>
                     </form>
                 </div>

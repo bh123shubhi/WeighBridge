@@ -7,6 +7,10 @@ class ExitVehicleController extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
+        $this->res = $this->common->checkLoginAuth();
+        if($this->res===false){
+            redirect(base_url()."login");
+        }
         $this->load->library('user_agent');
 
         $this->load->library('vehicle/Vehicle');

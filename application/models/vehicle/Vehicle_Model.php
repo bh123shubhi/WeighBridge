@@ -105,6 +105,8 @@ class Vehicle_Model extends CI_Model {
     }
 
     public function save_vehicle_entry($data){
+        $data['entry_by']=$this->res['value']['id'];
+        $data['timestamp']=date('Y-m-d H:i:s');
         $res = array('status' => true, 'msg' => 'Data Successfully Saved');
         $result = $this->db->insert('tbl_vehicle_entry', $data);
         if (!$result) {
@@ -119,17 +121,25 @@ class Vehicle_Model extends CI_Model {
 
     }
     public function save_exit_vehicle($exitVehicleArr=[]){
+        $exitVehicleArr['entry_by']=$this->res['value']['id'];
         $result = array('status' => false, 'msg' => 'Vehicle Not Exit');
         if(!empty($exitVehicleArr)){
             if(!empty($exitVehicleArr['vehicle_no']) && !empty($exitVehicleArr['vehicle_type']) && !empty($exitVehicleArr['vehicle_entry_id']) && $exitVehicleArr['vehicle_entry_id']>0){
-
+                    $exitVehicleArr['timestamp']=date('Y-m-d H:i:s');
                    $this->db->insert("tbl_vehicle_exit",$exitVehicleArr);
 
                    $exit__vehiicle_id=$this->db->insert_id();
                    if($exit__vehiicle_id>0){
-
-                      $result['status'] =  $this->db->where("id",$exitVehicleArr['vehicle_entry_id']);$this->db->update("tbl_vehicle_entry",["vehicle_in_status"=>"OUT"]);
-                        
+                    if($exitVehicleArr['entry_type']=='Empty Entry'){
+                        $arr=array('vehicle_in_status'=>'OUT');
+                        $this->db->where(array('id'=>$exitVehicleArr['vehicle_entry_id'],'vehicle_type'=>$exitVehicleArr['vehicle_type']));
+                        $result['status']=$this->db->update('tbl_empty_vehicle_entry',$arr);
+                    }else{
+                        $arr=array('vehicle_in_status'=>'OUT');
+                        $this->db->where(array('id'=>$exitVehicleArr['vehicle_entry_id'],'vehicle_type'=>$exitVehicleArr['vehicle_type']));
+                        $result['status']=$this->db->update('tbl_vehicle_entry',$arr);
+                        $result['status'] =  $this->db->where("id",$exitVehicleArr['vehicle_entry_id']);$this->db->update("tbl_vehicle_entry",["vehicle_in_status"=>"OUT"]);
+                    }                            
                       $result['msg'] = "Vehicle Exit Successfully";
                    }
 
@@ -140,40 +150,42 @@ class Vehicle_Model extends CI_Model {
     }
 
     public function check_vehicle_status($vehicle_no,$vehicle_type){
-        $sql = "select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,MAX(vehicle_in_status) as vehicle_in_status,MAX(zone_coming_id) as zone_coming_id,Max(entry_type) as entry_type from tbl_vehicle_entry";
+        $sql = "(select id,vehicle_no,vehicle_type,vehicle_in_status,zone_coming_id,entry_type,timestamp from tbl_vehicle_entry";
         if(!empty($vehicle_no)){
             $sql.=" where vehicle_no='".$vehicle_no."' " ;
         }
         if(!empty($vehicle_type)){
             $sql.=" and vehicle_type='".$vehicle_type."' " ;
         }
-        $sql .="UNION select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,MAX(vehicle_in_status) as vehicle_in_status,MAX(zone_coming_id) as zone_coming_id,Max(entry_type) as entry_type from tbl_empty_vehicle_entry";
+        $sql.=" order by id desc limit 1)";
+        $sql .=" UNION (select id,vehicle_no,vehicle_type,vehicle_in_status,zone_coming_id,entry_type,timestamp from tbl_empty_vehicle_entry";
         if(!empty($vehicle_no)){
             $sql.=" where vehicle_no='".$vehicle_no."' " ;
         }
         if(!empty($vehicle_type)){
             $sql.=" and vehicle_type='".$vehicle_type."' " ;
         }
-        $resultArray =$this->db->query($sql)->result_array();
-        if(!empty($resultArray)){
-            $idsArr = array_column($resultArray,"id");
-            $key = array_search(max($idsArr),$idsArr);
-            $result = $resultArray[$key];
-            $resultArray =[];
-            $resultArray=$result;
-        
+        $sql.=" order by id desc limit 1)";
+        $result =$this->db->query($sql)->result_array();
+        $resultArray=[];
+        if(!empty($result)){
+            $timearray=array_column($result,'timestamp');
+            $maxarr=max($timearray);
+            $finalarr=array_search($maxarr,array_column($result,'timestamp'));
+            $resultArray=$result[$finalarr];
         }
         return $resultArray;
     }
 
     public function check_exit_vehicle($vehicle_no,$vehicle_type){
-         $sql = "select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,MAX(timestamp) as vehicle_exit_time from tbl_vehicle_exit";
+         $sql = "select id,vehicle_no,vehicle_type,timestamp as vehicle_exit_time from tbl_vehicle_exit";
         if(!empty($vehicle_no)){
             $sql.=" where vehicle_no='".$vehicle_no."' ";
         }
         if(!empty($vehicle_type)){
             $sql.=" and vehicle_type='".$vehicle_type."' ";
         }
+        $sql.=" order by id desc limit 1";
         $resultArray = $this->db->query($sql)->row_array();
         return $resultArray;
     }
@@ -194,8 +206,8 @@ class Vehicle_Model extends CI_Model {
     }
     public function zoneTimeDetails($zone_coming_id=0){
         $zone_minutes = 0;
-       if(empty($zone_coming_id)){
-          $result = $this->db->get_where("tbl_master_zone",["zone_id"=>$zone_coming_id])->row_array();
+       if(!empty($zone_coming_id)){
+          $result = $this->db->get_where("tbl_zone_time_details",array("zone_id"=>$zone_coming_id))->row_array();
           if(!empty($result)){
             $zone_minutes = $result['zone_time'];
           }
@@ -204,9 +216,10 @@ class Vehicle_Model extends CI_Model {
        return $zone_minutes;
     }
     public function save_empty_vehicle_entry($dataArr){
+        $dataArr['entry_by']=$this->res['value']['id'];
+        $dataArr['timestamp']=date('Y-m-d H:i:s');
         $res = array('status' => true, 'msg' => 'Data Successfully Saved');
         $result = $this->db->insert('tbl_empty_vehicle_entry', $dataArr);
-        // echo $this->db->last_query();die;
         if (!$result) {
             $res = array('status' => false, 'msg' => 'Data Not Saved');
         }
@@ -228,7 +241,7 @@ class Vehicle_Model extends CI_Model {
 
     public function show_vehicle_list(){
         $finalArr=[];
-        $sql="Select * from tbl_vehicle_entry UNION Select * from tbl_empty_vehicle_entry";
+        $sql="Select *  from tbl_vehicle_entry UNION Select * from tbl_empty_vehicle_entry";
         $resultArray=$this->db->query($sql)->result_array();
         if(count($resultArray)>0){
             foreach($resultArray as $key=>$value){
@@ -241,15 +254,27 @@ class Vehicle_Model extends CI_Model {
                 $finalArr[$key]['entry_type']=$value['entry_type'];
                 $finalArr[$key]['key_entry_type']=str_replace(' ','_',$value['entry_type']);
                 $finalArr[$key]['garbage_category']=$this->getgarbage($value['garbage_type_id']);
-                $finalArr[$key]['in_weight']=$value['entry_type']=='Empty Entry'?$value['tare_weight']:$value['gross_weight'];
+                $finalArr[$key]['in_weight']=$value['entry_type']=='Empty Entry'?$value['gross_weight']:$value['gross_weight'];
                 $finalArr[$key]['out_weight']=$value['entry_type']=='Empty Entry'?$outVehicledetails['grossweight']:$outVehicledetails['emptyweight'];
                 $finalArr[$key]['in_time']=!empty($value['timestamp'])?date('m/d/Y h:i A',strtotime($value['timestamp'])):'';
                 $finalArr[$key]['out_time']=!empty($outVehicledetails['timestamp'])?date('m/d/Y h:i A',strtotime($outVehicledetails['timestamp'])):'';
+                $finalArr[$key]['user_name']=!empty($value['entry_by'])?$this->getEntryBy($value['entry_by']):'';
             }
             return $finalArr;
         }
     }
 
+    public function getEntryBy($userid){
+        $username='';
+        $this->db->select('first_name,last_name');
+        $this->db->from('tbl_master_user');
+        $this->db->where('id',$userid);
+        $result=$this->db->get()->row_array();
+        if(!empty($result)){
+            $username=$result['first_name'].' '.$result['last_name'];
+        }
+        return $username;
+    }
     public function getVehicleNo($vehicleid,$vehicle_type){
         $tbl=$vehicle_type=='MCD'?'tbl_mcd_own_vehicle_details':'tbl_private_vehicle_details';
         $this->db->select('registration_no');

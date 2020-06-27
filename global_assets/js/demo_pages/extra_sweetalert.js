@@ -585,13 +585,14 @@ var SweetAlert = function () {
         });
 
         // Alert combination
-        $('#sweet_combine').on('click', function() {
+          // Alert combination
+          $('#sweet_combine').on('click', function() {
             swalInit.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                text: "Vehicle is Carrying Over Weight!",
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
+                confirmButtonText: 'Yes, Save it!',
                 cancelButtonText: 'No, cancel!',
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger',
@@ -599,21 +600,49 @@ var SweetAlert = function () {
             }).then(function(result) {
                 if(result.value) {
                     swalInit.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
+                        'Saved!',
+                        'Vehicle Data Saved.',
                         'success'
                     );
                 }
                 else if(result.dismiss === swal.DismissReason.cancel) {
                     swalInit.fire(
                         'Cancelled',
-                        'Your imaginary file is safe :)',
+                        'Vehicle is not allowed to enter.',
                         'error'
                     );
                 }
             });
         });
-
+        $('#over_weight').on('click', function() {
+            swalInit.fire({
+                title: 'Are you sure?',
+                text: "Vehicle is Carrying Over Weight!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Save it!',
+                cancelButtonText: 'No, cancel!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function(result) {
+                if(result.value) {
+                    swalInit.fire(
+                        'Saved!',
+                        'Vehicle Data Saved.',
+                        'success'
+                    );
+                    $("#vehicleform").submit();
+            }
+                else if(result.dismiss === swal.DismissReason.cancel) {
+                    swalInit.fire(
+                        'Cancelled',
+                        'Vehicle is not allowed to enter.',
+                        'error'
+                    );
+                }
+            });
+        });
 
         //
         // Positions

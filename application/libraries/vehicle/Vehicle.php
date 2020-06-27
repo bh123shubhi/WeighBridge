@@ -56,7 +56,6 @@ class Vehicle {
     public function check_vehicle_entry($vehicle_no=null,$vehicle_type=null){
            $result_array = $this->CI->vehimodelObj->check_vehicle_status($vehicle_no,$vehicle_type);
            $result_status = ["status"=>true,"msg"=>"vehicle Entry Allow"];
-
            if(!empty($result_array) && count($result_array)>0){
                 if(in_array($result_array['vehicle_in_status'],["IN"])){
                   $result_status = ["status"=>false,"msg"=>"Vehicle Not Allowed"];

@@ -10,9 +10,10 @@ class Vehiclemaster_model extends CI_Model {
     }
 
     public function getZoneTimeList() {
-        $this->db->select('zonetime.*,zone.zone');
+        $this->db->select('zonetime.*,zone.zone,user.first_name,user.last_name');
         $this->db->from('tbl_zone_time_details as zonetime');
         $this->db->join('tbl_master_zone as zone', 'zonetime.zone_id=zone.id', 'left');
+        $this->db->join('tbl_master_user as user','zonetime.entry_by=user.id','left');
         $result = $this->db->get()->result_array();
         if (count($result) > 0) {
             return array('status' => true, 'msg' => 'Zone Time List Found', 'value' => $result);
@@ -49,7 +50,8 @@ class Vehiclemaster_model extends CI_Model {
         if (count($res) > 0) {
             $status = $res['status'];
             $new_status = $status == 'TRUE' ? 'FALSE' : 'TRUE';
-            $data = array('status' => $new_status);
+            $data = array('status' => $new_status,'entry_by'=>$this->res['value']['id']);
+            $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->where('id', $id);
             $this->db->update('tbl_zone_time_details', $data);
             if ($this->db->affected_rows() > 0) {
@@ -61,6 +63,7 @@ class Vehiclemaster_model extends CI_Model {
     }
 
     public function saveZoneTime($data) {
+        $data['updated_at']=date('Y-m-d H:i:s');
         $this->db->insert('tbl_zone_time_details', $data);
         if ($this->db->affected_rows() > 0) {
             return $array = array('status' => true, 'msg' => 'Data Successfully Saved');
@@ -84,6 +87,7 @@ class Vehiclemaster_model extends CI_Model {
     }
 
     public function updateZoneTime($data, $id) {
+        $data['updated_at']=date('Y-m-d H:i:s');
         $this->db->where('id', $id);
         $this->db->update('tbl_zone_time_details', $data);
         if ($this->db->affected_rows() > 0) {
@@ -118,6 +122,7 @@ class Vehiclemaster_model extends CI_Model {
     }
 
     public function savePrivateVehicle($data) {
+        $data['updated_at']=date('Y-m-d H:i:s');
         $this->db->insert('tbl_private_vehicle_details', $data);
         if ($this->db->affected_rows() > 0) {
             return $array = array('status' => true, 'msg' => 'Data Successfully Saved');
@@ -127,10 +132,11 @@ class Vehiclemaster_model extends CI_Model {
     }
 
     public function getPrivateVehicleList() {
-        $this->db->select('veh.*,gar.garbage,agency.agencyname');
+        $this->db->select('veh.*,gar.garbage,agency.agencyname,user.first_name,user.last_name');
         $this->db->from('tbl_private_vehicle_details as veh');
         $this->db->join('tbl_master_garbage as gar', 'veh.garbage_id=gar.id', 'left');
         $this->db->join('tbl_master_agency as agency', 'veh.agency_id=agency.id', 'left');
+        $this->db->join('tbl_master_user as user', 'veh.entry_by=user.id', 'left');
         $result = $this->db->get()->result_array();
         if (count($result) > 0) {
             return array('status' => true, 'msg' => 'Private Vehicle List Found', 'value' => $result);
@@ -154,6 +160,7 @@ class Vehiclemaster_model extends CI_Model {
     }
 
     public function updatePrivateVehicle($data, $id) {
+        $data['updated_at']=date('Y-m-d H:i:s');
         $this->db->where('id', $id);
         $this->db->update('tbl_private_vehicle_details', $data);
         if ($this->db->affected_rows() > 0) {
@@ -171,7 +178,8 @@ class Vehiclemaster_model extends CI_Model {
         if (count($res) > 0) {
             $status = $res['status'];
             $new_status = $status == 'TRUE' ? 'FALSE' : 'TRUE';
-            $data = array('status' => $new_status);
+            $data = array('status' => $new_status,'entry_by'=>$this->res['value']['id']);
+            $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->where('id', $id);
             $this->db->update('tbl_private_vehicle_details', $data);
             if ($this->db->affected_rows() > 0) {
@@ -195,6 +203,7 @@ class Vehiclemaster_model extends CI_Model {
     }
 
     public function saveMcdVehicle($data) {
+        $data['updated_at']=date('Y-m-d H:i:s');
         $this->db->insert('tbl_mcd_own_vehicle_details', $data);
         if ($this->db->affected_rows() > 0) {
             return $array = array('status' => true, 'msg' => 'Data Successfully Saved');
@@ -204,11 +213,12 @@ class Vehiclemaster_model extends CI_Model {
     }
 
     public function getMcdVehicleList() {
-        $this->db->select('mcd.*,gar.garbage,fleet.fleetoperator,zone.zone');
+        $this->db->select('mcd.*,gar.garbage,fleet.fleetoperator,zone.zone,user.first_name,user.last_name');
         $this->db->from('tbl_mcd_own_vehicle_details as mcd');
         $this->db->join('tbl_master_garbage as gar', 'mcd.garbage_id=gar.id', 'left');
         $this->db->join('tbl_master_fleetoperator as fleet', 'mcd.fleet_operator_id=fleet.id', 'left');
         $this->db->join('tbl_master_zone as zone', 'mcd.zone_id=zone.id', 'left');
+        $this->db->join('tbl_master_user as user','mcd.entry_by=user.id','left');
         $result = $this->db->get()->result_array();
         if (count($result) > 0) {
             return array('status' => true, 'msg' => 'Private Vehicle Details Found', 'value' => $result);
@@ -225,7 +235,8 @@ class Vehiclemaster_model extends CI_Model {
         if (count($res) > 0) {
             $status = $res['status'];
             $new_status = $status == 'TRUE' ? 'FALSE' : 'TRUE';
-            $data = array('status' => $new_status);
+            $data = array('status' => $new_status,'entry_by'=>$this->res['value']['id']);
+            $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->where('id', $id);
             $this->db->update('tbl_mcd_own_vehicle_details', $data);
             if ($this->db->affected_rows() > 0) {
@@ -252,6 +263,7 @@ class Vehiclemaster_model extends CI_Model {
     }
 
     public function updateMcdVehicle($data, $id) {
+        $data['updated_at']=date('Y-m-d H:i:s');
         $this->db->where('id', $id);
         $this->db->update('tbl_mcd_own_vehicle_details', $data);
         if ($this->db->affected_rows() > 0) {

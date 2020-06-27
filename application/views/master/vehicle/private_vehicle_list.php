@@ -63,6 +63,7 @@
                     $btnstatus = $value['status'] == 'TRUE' ? 'In-Active' : 'Active';
                     $status = $value['status'] == 'TRUE' ? 'Active' : 'In-Active';
                     $class = $value['status'] == 'TRUE' ? 'badge badge-success' : 'badge badge-secondary';
+                    $by=!empty($value['first_name'])?'By':'';                    
                     ?>
                     <tr>
                         <td><?php echo $key + 1; ?></td>
@@ -76,7 +77,7 @@
                         <td><?php echo date('d/M/Y', strtotime($value['purchase_date'])); ?></td>
                         <td><?php echo $value['triptime']; ?></td>
                         <td><span class="<?php echo $class;?>"><?php echo $status; ?></span></td>
-                        <td><?php echo date('d/M/Y', strtotime($value['timestamp'])); ?></td>
+                        <td><?php echo date('d/M/Y', strtotime($value['updated_at'])); ?> <?php echo $by;?> <?php echo $value['first_name'].' '.$value['last_name']; ?></td>
                         <td class="text-center"><div class="list-icons">
                                 <div class="dropdown"> <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu9"></i> </a>
                                     <div class="dropdown-menu dropdown-menu-right"> 

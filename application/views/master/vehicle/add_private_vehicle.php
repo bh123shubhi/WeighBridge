@@ -48,14 +48,14 @@ $heading=isset($result['value']['id'])?'Edit Private Vehicle':'Add Private Vehic
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Registration Valid upto:</label>
-                            <input type="text" class="form-control pickadate-accessibility" name="registration_date" placeholder="Enter Registration Date&hellip;" value="<?php echo isset($result['value']['registration_date']) ? $result['value']['registration_date'] : ''; ?>" required>
+                            <input type="text" class="form-control pickadate-accessibility" name="registration_date" placeholder="Enter Registration Date&hellip;" value="<?php echo isset($result['value']['registration_date']) ? date('d M,Y', strtotime($result['value']['registration_date'])) : ''; ?>" required>
                         </div>
 
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Purchase Date:</label>
-                            <input type="text" class="form-control pickadate-accessibility" name="purchase_date" placeholder="Enter Purchase Date&hellip;" value="<?php echo isset($result['value']['purchase_date']) ? $result['value']['purchase_date'] : ''; ?>" required>
+                            <input type="text" class="form-control pickadate-accessibility" name="purchase_date" placeholder="Enter Purchase Date&hellip;" value="<?php echo isset($result['value']['purchase_date']) ? date('d M,Y', strtotime($result['value']['purchase_date'])) : ''; ?>" required>
                         </div>
                     </div>
                 </div>

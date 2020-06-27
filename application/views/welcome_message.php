@@ -39,20 +39,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script src="<?php echo base_url(); ?>global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
         <script src="<?php echo base_url(); ?>global_assets/js/plugins/pickers/pickadate/picker.js"></script>
         <script src="<?php echo base_url(); ?>global_assets/js/plugins/pickers/pickadate/picker.date.js"></script>
-       
+        <script src="<?php echo base_url(); ?>global_assets/js/plugins/notifications/sweet_alert.min.js"></script>
+        <script src="<?php echo base_url(); ?>global_assets/js/demo_pages/extra_sweetalert.js"></script>
+        <script src="<?php echo base_url(); ?>/app/vehicle/entryvehicle.js"></script>
         <script src="<?php echo base_url(); ?>global_assets/js/demo_pages/layout_fixed_sidebar_custom.js"></script>
         <script src="<?php echo base_url(); ?>global_assets/js/demo_pages/form_select2.js"></script>
         <script src="<?php echo base_url(); ?>global_assets/js/demo_pages/picker_date.js"></script>
         <script src="<?php echo base_url(); ?>global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+        <script src="<?php echo base_url(); ?>global_assets/js/plugins/tables/datatables/extensions/jszip/jszip.min.js"></script>
+        <script src="<?php echo base_url(); ?>global_assets/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js"></script>
+        <script src="<?php echo base_url(); ?>global_assets/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js"></script>
         <script src="<?php echo base_url(); ?>global_assets/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
+        <script src="<?php echo base_url(); ?>global_assets/js/demo_pages/datatables_extension_buttons_html5.js"></script>
+
+        <script src="<?php echo base_url(); ?>global_assets/js/demo_pages/datatables_advanced.js"></script>
         <script src="<?php echo base_url(); ?>global_assets/js/plugins/forms/validation/validate.min.js"></script>
         <script src="<?php echo base_url(); ?>global_assets/js/demo_pages/datatables_extension_colvis.js"></script>
+        
         <!-- /theme JS files -->
         <script src="<?php echo base_url(); ?>Assets/js/app.js"></script>
-        <script src="<?php echo base_url(); ?>/app/vehicle/entryvehicle.js"></script>
+        
         <script src="<?php echo base_url(); ?>/app/vehicle/exitvehicle.js"></script>
         <script src="<?php echo base_url(); ?>/app/master/admin.js"></script>
         <script src="<?php echo base_url(); ?>/app/master/operator.js"></script>
+        <script src="<?php echo base_url(); ?>/app/report/report.js"></script>
+        <script src="<?php echo base_url(); ?>/app/profile/profile.js"></script>
 
     </head>
     <body class="navbar-top">
