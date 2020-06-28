@@ -14,6 +14,7 @@ $(document).ready(function () {;
           var driverid = $(this). children("option:selected").data('driverid');
           var in_weight = $(this). children("option:selected").data('in-weight');
           var vehicle_img = $(this). children("option:selected").data('vehicle-img');
+           var model = $(this). children("option:selected").data('model');
 
           $("#zone").val(zone_id);
           $("#garbage").val(garbage);
@@ -22,6 +23,7 @@ $(document).ready(function () {;
            $("#driverid").val(driverid);
             $("#in_weight").val(in_weight);
              $("#vehicle_img").val(vehicle_img);
+               $("#model").val(model);
        
           var vehiclevalue = $(this).val();
           var vehiclenoArr=vehiclevalue.split('-');
@@ -43,7 +45,7 @@ $(document).ready(function () {;
     
     for(var k in items){
         var data = items[k];
-        that.append("<option data-zone='"+data.zone+"' data-garbage='"+data.garbage+"' data-entry-time='"+data.in_time+"' data-slip-no='"+data.slip_no+"' data-driverid='"+data.driverid+"' data-in-weight='"+data.in_weight+"' data-vehicle-img:'"+data.vehicle_img+"'  value='"+ data.id +"'>"+ data.text +"</option>");
+        that.append("<option data-zone='"+data.zone+"' data-garbage='"+data.garbage+"' data-entry-time='"+data.in_time+"' data-slip-no='"+data.slip_no+"' data-driverid='"+data.driverid+"' data-in-weight='"+data.in_weight+"' data-vehicle-img:'"+data.vehicle_img+"' data-model:'"+data.model+"'   value='"+ data.id +"'>"+ data.text +"</option>");
     }
     $(that).val(null).trigger("change");
     that.select2(config ||{minimumInputLength:2});
@@ -67,7 +69,7 @@ $(document).ready(function () {;
                     options.push({"id":"","text":""});
                     for (var prop in respData['result']) {
                       var key = respData['result'][prop]['vehicle_no']+'-'+respData['result'][prop]['vehicle_type']+'-'+respData['result'][prop]['id']+'-'+((typeof entry_type[respData['result'][prop]['entry_type']]!=='undefined')?(entry_type[respData['result'][prop]['entry_type']]):'');
-                      options.push({"id":key,"text":respData['result'][prop]['vehicle_no'],'zone':respData['result'][prop]['zone'],'garbage':respData['result'][prop]['garbage'],'in_time':respData['result'][prop]['entry_time'],'slip_no':respData['result'][prop]['slipno'],'driverid':respData['result'][prop]['driverid'],'in_weight':respData['result'][prop]['in_weight'],'vehicle_img':respData['result'][prop]['vehicle_img']});
+                      options.push({"id":key,"text":respData['result'][prop]['vehicle_no'],'zone':respData['result'][prop]['zone'],'garbage':respData['result'][prop]['garbage'],'in_time':respData['result'][prop]['entry_time'],'slip_no':respData['result'][prop]['slipno'],'driverid':respData['result'][prop]['driverid'],'in_weight':respData['result'][prop]['in_weight'],'vehicle_img':respData['result'][prop]['vehicle_img'],'model':respData['result'][prop]['model']});
                     }
                     $("#exit_vehicle_no").addSelect2Items(options,{minimumInputLength:2});
                   }       
@@ -82,6 +84,7 @@ $(document).ready(function () {;
                       var driverid = $("#driverid").val();
                        var in_weight = $("#in_weight").val();
                         var vehicle_img = $("#vehicle_img").val();
+                          var model = $("#model").val();
                      postData['vehicle_no'] = vehicle_no;
                      postData['zone'] = zone;
                      postData['garbage'] = garbage;
@@ -94,8 +97,8 @@ $(document).ready(function () {;
                      postData['out_weight'] =respData['out_weight'];
                      postData['net_weight'] =in_weight-respData['out_weight']; 
                      postData['exit_time'] =respData['timestamp']; 
-                      postData['vehicle_img'] =baseURL+vehicle_img;
-                      console.log(postData);return;
+                      postData['model'] =respData['model']; 
+                      postData['vehicle_img'] =vehicle_img; 
                     window.location = baseURL+'/vehicle/rendersliporprint/'+btoa(JSON.stringify(postData));
                     
                     //   var originalContents = document.body.innerHTML;
@@ -119,7 +122,7 @@ $(document).ready(function () {;
                       options.push({"id":"","text":""});
                       for (var prop in respData['result']) {
                         var key = respData['result'][prop]['vehicle_no']+'-'+respData['result'][prop]['vehicle_type']+'-'+respData['result'][prop]['id']+'-'+((typeof entry_type[respData['result'][prop]['entry_type']]!=='undefined')?(entry_type[respData['result'][prop]['entry_type']]):'');
-                        options.push({"id":key,"text":respData['result'][prop]['vehicle_no'],'zone':respData['result'][prop]['zone'],'garbage':respData['result'][prop]['garbage'],'in_time':respData['result'][prop]['entry_time'],'slip_no':respData['result'][prop]['slipno'],'driverid':respData['result'][prop]['driverid'],'in_weight':respData['result'][prop]['in_weight'],'vehicle_img':respData['result'][prop]['vehicle_img']});
+                        options.push({"id":key,"text":respData['result'][prop]['vehicle_no'],'zone':respData['result'][prop]['zone'],'garbage':respData['result'][prop]['garbage'],'in_time':respData['result'][prop]['entry_time'],'slip_no':respData['result'][prop]['slipno'],'driverid':respData['result'][prop]['driverid'],'in_weight':respData['result'][prop]['in_weight'],'vehicle_img':respData['result'][prop]['vehicle_img'],'model':respData['result'][prop]['model']});
                       }
                       $("#exit_vehicle_no").addSelect2Items(options,{'minimumInputLength':2});
                     }     
@@ -149,7 +152,7 @@ $(document).ready(function () {;
             options.push({"id":"","text":""});
              $.each(response, function (key, value) {
               var key = value['vehicle_no']+'-'+value['vehicle_type']+'-'+value['id']+'-'+((typeof entry_type[value['entry_type']]!=='undefined')?(entry_type[value['entry_type']]):'');
-               options.push({"id":key,"text":value['vehicle_no'],'zone':value['zone'],'garbage':value['garbage'],'in_time':value['entry_time'],'slip_no':value['slipno'],'driverid':value['driverid'],'in_weight':value['in_weight'],'vehicle_img':value['vehicle_img']});
+               options.push({"id":key,"text":value['vehicle_no'],'zone':value['zone'],'garbage':value['garbage'],'in_time':value['entry_time'],'slip_no':value['slipno'],'driverid':value['driverid'],'in_weight':value['in_weight'],'vehicle_img':value['vehicle_img'],'model':value['model']});
              });
              $("#exit_vehicle_no").addSelect2Items(options,{'minimumInputLength':2});
         },
