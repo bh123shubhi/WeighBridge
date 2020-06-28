@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'https://3.7.66.57/weighbridge/';
+$config['base_url'] = 'http://localhost/weighbridge/';
 
 /*
 |--------------------------------------------------------------------------

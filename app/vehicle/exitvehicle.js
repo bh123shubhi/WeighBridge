@@ -49,6 +49,7 @@ $(document).ready(function () {;
           success:function(resp){
             if(typeof resp!=='undefined' && resp!=''){
                var respData = JSON.parse(resp);
+               //console.log(respData);return;
                if(respData['status']=='true'){
                  var entry_type = $("#entry").val();
                  entry_type = JSON.parse(entry_type);
