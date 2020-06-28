@@ -85,7 +85,7 @@ class ExitVehicleController extends CI_Controller {
         if(!empty($slip_data)){
             $data['result'] = json_decode(base64_decode($slip_data),true);
             $data['result']['entry'] = array_flip($data['result']['entry']);
-            $data['result']['entry_type'] = isset(data['result']['entry'])?$data['result']['entry'][$data['result']['entry_type']]:$data['result']['entry_type'];
+            $data['result']['entry_type'] = !empty(data['result']['entry'])?$data['result']['entry'][$data['result']['entry_type']]:$data['result']['entry_type'];
         }
         
         $data['back_url'] = 'vehicle/vehicle_exit';
