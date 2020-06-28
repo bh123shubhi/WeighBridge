@@ -23,22 +23,13 @@ class ExitVehicleController extends CI_Controller {
     }
 
     public function vehicle_exit() {
-
         $data['page'] = '/vehicle/vehicle_exit';
-
         $data['result']=$this->vehicle->show_exit_vehicle_no();
-        // echo "<pre>";print_r($data['result']);die;
-         $data['entry']=$this->flipentryType;
+        $data['entry']=$this->flipentryType;
         $data['url']='/save_vehicle_exit';
      
         $this->load->view('welcome_message', $data);
     }
-
-    // public function show_vehicle_detail() {
-    //     $result=$this->vehicle->show_vehicle_detail();
-    //     echo json_encode($result);
-    // }
-
     public function save_vehicle_exit(){
          $vehicle_no_exit = $this->input->post('exit_vehicle_no',TRUE);
          $emptyweight=$this->input->post('emptyweight',TRUE);
@@ -90,7 +81,6 @@ class ExitVehicleController extends CI_Controller {
         echo json_encode($result);
     }
     public function render_slip_for_print($slip_data=''){
-        
         $data['result'] = [];
         if(!empty($slip_data)){
             $data['result'] = json_decode(base64_decode($slip_data),true);

@@ -35,4 +35,9 @@ class Operator {
         return $result;
     }
 
+    public function updatePassword($dataArray,$id){
+        $result = $this->CI->opmodelObj->updatePassword($dataArray,$id);
+        return $result;  
+    }
+
 }

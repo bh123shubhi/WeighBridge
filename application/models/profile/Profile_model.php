@@ -33,4 +33,16 @@ class Profile_model extends CI_Model {
         return $status;    
     }
 
+    public function checkLoginCredentials($id){
+        $this->db->select('*');
+        $this->db->from('tbl_master_user');
+        $this->db->where('id',$id);
+        $result = $this->db->get()->row_array();
+        if (!empty($result) && is_array($result) && count($result) > 0) {
+            return array('status' => true, 'msg' => 'User Successfully login', 'value' => $result);
+        } else {
+            return array('status' => false, 'msg' => 'Login Credentials Invalid', 'value' => []);
+        }
+    }
+
 }

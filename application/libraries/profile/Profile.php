@@ -20,4 +20,9 @@ class Profile {
         return $result;  
     }
 
+    public function checkLoginCredentials($id){
+        $result = $this->CI->pmodelObj->checkLoginCredentials($id);
+        return $result;   
+    }
+
 }

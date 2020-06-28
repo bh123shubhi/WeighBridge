@@ -87,13 +87,17 @@ class ProfileController extends CI_Controller {
                 $data['msg']='Data Successfully Updated';
                 $data['color']='alert alert-success';
                 $data['url'] = 'save_profile';
+                $result=$this->profile->checkLoginCredentials($this->session->userData('user_auth_data')['value']['id']);
+                $this->session->set_userdata('user_auth_data',$result);
                 $data['userdata']=$this->session->userData('user_auth_data');
                 $this->session->set_flashdata('temp_data', $data);
                 redirect(base_url() . 'profile');
             }else{
                 $data['msg']='Data Not Updated';
                 $data['color']='alert alert-danger';
-                $data['url'] = 'save_profile';    
+                $data['url'] = 'save_profile';
+                $result=$this->profile->checkLoginCredentials($this->session->userData('user_auth_data')['value']['id']);
+                $this->session->set_userdata('user_auth_data',$result);
                 $data['userdata']=$this->session->userData('user_auth_data');
                 $this->session->set_flashdata('temp_data', $data);
                 redirect(base_url() . 'profile');
