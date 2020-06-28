@@ -47,6 +47,7 @@
                 <input type="hidden" id="driverid" value=''/>
                 <input type="hidden" id="in_weight" value=''/>
                  <input type="hidden" id="vehicle_img" value=''/>
+                  <input type="hidden" id="model" value=''/>
 
 
          <div class="form-group row">
