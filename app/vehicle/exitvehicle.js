@@ -92,9 +92,10 @@ $(document).ready(function () {;
                      postData['driver_id'] =driverid; 
                      postData['in_weight'] =in_weight; 
                      postData['out_weight'] =respData['out_weight'];
-                      postData['net_weight'] =0; 
+                     postData['net_weight'] =in_weight-respData['out_weight']; 
                      postData['exit_time'] =respData['timestamp']; 
-                      postData['vehicle_img'] =vehicle_img; 
+                      postData['vehicle_img'] =baseURL+vehicle_img;
+                      console.log(postData);return;
                     window.location = baseURL+'/vehicle/rendersliporprint/'+btoa(JSON.stringify(postData));
                     
                     //   var originalContents = document.body.innerHTML;
