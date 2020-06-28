@@ -912,7 +912,7 @@ class HomeController extends CI_Controller {
                         $data['url'] = '/operator/save_operator/update/' . $param;
                         $data['result'] = $result;
                         $this->load->view('welcome_message', $data);
-                    } else {//extra
+                    }else {//extra
                         $data['url'] = '/operator/save_operator';
                         $this->load->view('welcome_message', $data);
                     }
@@ -1012,6 +1012,61 @@ class HomeController extends CI_Controller {
                     }
                 }
                 break;
+                case 'master/operator/change_password':
+                if(!empty($action) && $param>0){
+                    if($action=='pass'){
+                        $result = $this->operator->getsingleoperator($param);
+                        $data['url'] = 'master/operator/update_password/pass/' . $param;
+                        $data['result'] = $result;
+                        $this->load->view('welcome_message', $data);
+                    }else{
+                        $data['result'] = $this->operator->getoperatorlist();
+                        $this->load->view('welcome_message', $data);
+                    }
+                }else{
+                    $data['result'] = $this->operator->getoperatorlist();
+                    $this->load->view('welcome_message', $data);
+                }
+                break;
+                case 'master/operator/update_password':
+                if(!empty($action) && $param>0){
+                    if($action=='pass'){
+                        $password=$this->input->post('password',TRUE);
+                        $confirm_password=$this->input->post('confirm_password',TRUE);
+                        $comparestatus=strcmp($password,$confirm_password);
+                        if($comparestatus!==0){
+                            $data['msg'] = 'Password Not Match';
+                            $data['color'] = 'alert alert-danger';
+                            $data['url'] = 'master/operator/update_password/pass/' . $param;
+                            $this->session->set_flashdata('temp_data', $data);
+                            redirect(base_url() . 'master/operator/change_password/pass/'.$param);
+                        }else{
+                            $userid=$param;
+                            $dataArray=['password'=>$password,'confirm_password'=>$confirm_password];
+                            $result = $this->operator->updatePassword($dataArray,$userid);
+                            if($result==1){
+                                $data['url'] = 'master/operator/update_password/pass/' . $param;
+                                $data['msg'] = 'Password Successfully Changed';
+                                $data['color'] = 'alert alert-success';
+                                $this->session->set_flashdata('temp_data', $data);
+                                redirect(base_url() . 'master/operator/change_password/pass/'.$param);
+                            }else{
+                                $data['url'] = 'master/operator/update_password/pass/' . $param;
+                                $data['msg'] = 'Password Not Changed';
+                                $data['color'] = 'alert alert-danger';
+                                $this->session->set_flashdata('temp_data', $data);
+                                redirect(base_url() . 'master/operator/change_password/pass/'.$param);
+                            }
+                        }
+                    }else{
+                        $data['result'] = $this->operator->getoperatorlist();
+                        $this->load->view('welcome_message', $data);
+                    }
+                }else{
+                    $data['result'] = $this->operator->getoperatorlist();
+                    $this->load->view('welcome_message', $data);  
+                }
+               break;
             default:
                 redirect($this->agent->referrer());
         }

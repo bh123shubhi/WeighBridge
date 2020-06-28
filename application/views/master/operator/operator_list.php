@@ -72,6 +72,7 @@
                                     <a href="" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i> </a>
                                     <div class="dropdown-menu dropdown-menu-right"> 
                                         <a href="<?php echo site_url('master') . '/operator/add_operator/edit/' . $value['id']; ?>" class="dropdown-item"><i class="icon-pencil"></i>Edit</a> 
+                                        <a href="<?php echo site_url('master') . '/operator/change_password/pass/' . $value['id']; ?>" class="dropdown-item"><i class="icon-pencil"></i>Change Password</a> 
                                         <a href="<?php echo site_url('master') . '/operator/operator_list/delete/' . $value['id']; ?>" class="dropdown-item"><i class="icon-arrow-down7"></i><?php echo $status; ?></a> 
                                     </div></div> 
                             </div>

@@ -48,7 +48,7 @@
           <?php
           foreach($result as $key=>$value){
             $postData = base64_encode(json_encode([
-               "vehicle_no"=>$value['vehicle_no'],
+              "vehicle_no"=>$value['vehicle_no'],
               "zone"=>$value['zone_coming_from'],
               "garbage"=>$value['garbage_category'],
               "entry_type"=>$value['entry_type'],
@@ -58,7 +58,8 @@
               "out_weight"=>$value['out_weight'],
                "src"=>'reg',
             ]
-          ));?>
+          ));
+          ?>
             <tr>
               <td><?php echo $key+1;?></td>
               <td><?php echo $value['vehicle_no'];?></td>

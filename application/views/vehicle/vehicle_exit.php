@@ -18,7 +18,7 @@
        <div class="container-fluid">
           <div id="msg" class="">
             <a href="#" class="close"  data-dismiss="alert" aria-label="close">&times;</a>     
-            <spna id="errormsg"></span>
+            <span id="errormsg"></span>
           </div>
              
         </div>

@@ -106,4 +106,15 @@ class Operator_model extends CI_Model {
         }
     }
 
+    public function updatePassword($data,$userid){
+        $this->db->where('id',$userid);
+        $this->db->update('tbl_master_user',$data);
+        if($this->db->affected_rows()>0){
+            $status=true;
+        }else{
+            $status=false;
+        }
+        return $status;
+    }
+
 }

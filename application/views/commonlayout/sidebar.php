@@ -24,7 +24,12 @@
             <div class="sidebar-user-material-body">
                 <div class="card-body text-center">
                     <a href="#">
-                        <img src="<?php echo base_url(); ?>Assets/images/placeholders/placeholder.jpg" class="img-fluid rounded-circle shadow-1 mb-3" width="80" height="80" alt="">
+                        <?php
+                        $userdata=$this->session->userData('user_auth_data');
+                        $path=!empty($userdata['value']['profile_filepath'])?$userdata['value']['profile_filepath']:'global_assets/images/placeholders/placeholder.jpg';
+                        $img_path=base_url().$path;
+                        ?>
+                        <img src="<?php echo $img_path;?>" class="img-fluid rounded-circle shadow-1 mb-3" width="80" height="80" alt="">
                     </a>
                     <?php
                     $userdata=$this->session->userData('user_auth_data');
