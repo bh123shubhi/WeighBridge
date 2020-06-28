@@ -108,6 +108,9 @@
                         <li class="nav-item"><a href="<?php echo base_url(); ?>report/vehicle_wise_report" class="nav-link">Vehicle Wise Report</a></li>
                     </ul>
                 </li>
+                <?php
+                if($userdata['value']['user_type']=='ADMIN'){
+                ?>
                 <li class="nav-item nav-item-submenu">
                     <a ui-sref="#" class="nav-link"><i class="icon-color-sampler"></i> <span>Master</span></a>
 
@@ -128,6 +131,9 @@
                         <li class="nav-item"><a href="<?php echo base_url(); ?>master/admin/admin_list" class="nav-link">Admin Master</a></li>
                     </ul>
                 </li>
+                <?php
+                }
+                ?>
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-cog3"></i> <span>Settings</span></a>
 
