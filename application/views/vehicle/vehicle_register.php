@@ -3,14 +3,14 @@
       <div class="page-header-content header-elements-md-inline">
         <div class="page-title d-flex">
           <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Vehicle Register</h4>
-          <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a> </div>
+          <a href="" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a> </div>
         <div class="header-elements d-none">
           <div class="d-flex justify-content-center"> </div>
         </div>
       </div>
       <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
         <div class="d-flex">
-          <div class="breadcrumb"> <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a> <span class="breadcrumb-item active">Vehicle Register</span> </div>
+          <div class="breadcrumb"> <a href="<?php echo base_url(); ?>dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a> <span class="breadcrumb-item active">Vehicle Register</span> </div>
           <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a> </div>
         
       </div>
@@ -56,7 +56,12 @@
               "exit_time"=>$value['out_time'],
               "in_weight"=>$value['in_weight'],
               "out_weight"=>$value['out_weight'],
-               "src"=>'reg',
+              "net_weight"=>$value['net_weight'],
+              "driver_id"=>$value['driver_id'],
+              "model"=>$value['model'],
+              "slipno"=>$value['slipno'],           
+              "vehicle_img"=>base_url().$value['webcam_imgpath'],
+              "src"=>'reg'
             ]
           ));
           ?>

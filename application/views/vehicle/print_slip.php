@@ -58,7 +58,7 @@
       <div class="card pl-5 pr-5" >
         <div class="card-header bg-white" style="border: 2px solid rgba(0,0,0,.125);">
           <div class="row">
-            <div class="col-md-2"><img src="global_assets/images/north-dmc-logo.png" style="width: 85px;height: 100px;" alt="Logo"/></div>
+            <div class="col-md-2"><img src="<?php echo base_url();?>global_assets/images/north-dmc-logo.png" style="width: 85px;height: 100px;" alt="Logo"/></div>
             <div class="col-md-10 text-center">
               <h2 class="card-title">NORTH DELHI MUNICIPAL CORPORATION</h2>
         <h5 class="card-title text-default mt-2" style="display: inline-block; padding: 1px 8px;">WEIGHMENT SLIP</h5>
@@ -68,9 +68,9 @@
         </div>
       <div class="card-body  pl-3 p-0" style="border: 2px solid rgba(0,0,0,.125);">
         <div class="row">
-          <div class="col-md-4 p-2"><label class="m-0">Slip No.:</label><input class="text-uppercase font-weight-bold ml-4" type="text" id="slip_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" name="registration" value="<?php echo $result['slip_no']; ?>" style="border: 0px;"></div>
-          <div class="col-md-4 p-2"><label class="m-0">Date:</label><input class="text-uppercase font-weight-bold ml-4" type="text" id="registration_date_<?php echo str_replace(" ","_",$value['vehicle_no']);?>" name="registration" value="1<?php echo date('d/m/Y h:i:s',strtotime($result['registration_date'])); ?>" style="border: 0px;"></div>
-           <div class="col-md-4 p-2"><label class="m-0">Entry Type:</label><input class="text-uppercase font-weight-bold ml-4" id="entry_type+<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="<?php echo $result['entry_type']; ?>" style="border: 0px;"></div>
+          <div class="col-md-4 p-2"><label class="m-0">Slip No.:</label><input class="text-uppercase font-weight-bold ml-4" type="text" id="slip_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" name="registration" value="<?php echo $result['slipno']; ?>" style="border: 0px;"></div>
+          <div class="col-md-4 p-2"><label class="m-0">Date:</label><input class="text-uppercase font-weight-bold ml-4" type="text" id="registration_date_<?php echo str_replace(" ","_",$value['vehicle_no']);?>" name="registration" value="<?php echo date('d/m/Y h:i:s A'); ?>" style="border: 0px;"></div>
+           <div class="col-md-4 p-2"><label class="m-0">Entry Type:</label><input class="text-uppercase font-weight-bold ml-4" id="entry_type_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="<?php echo $result['entry_type']; ?>" style="border: 0px;"></div>
         </div>
       </div>
         <div class="card-body" style="border: 2px solid rgba(0,0,0,.125);">
@@ -80,15 +80,18 @@
                 <label class="m-0">Vehicle No.:</label><input class="text-uppercase ml-4 font-weight-bold" type="text" id="vehicle_no_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" name="registration" value="<?php echo $result['vehicle_no']; ?>" style="border: 0px;">
               </div>
               <div class="col-md-4">
-                 <label class="m-0">Vehicle:</label><input class="text-uppercase ml-4 font-weight-bold" type="text" name="registration" id="vehicle_type_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" value="TRUCK" style="border: 0px;">
+                 <label class="m-0">Vehicle:</label><input class="text-uppercase ml-4 font-weight-bold" type="text" name="registration" id="vehicle_type_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" value="<?php echo $result['model'];?>" style="border: 0px;">
               </div>
               <div class="col-md-4">
-                <img src="global_assets/images/help_gr_cl_delhi.png" style="position: absolute; width:220px; margin-left: 50px;" />
+              <?php
+              $imgpath=!empty($result['vehicle_img'])?$result['vehicle_img']:'';
+              ?>
+                <img src="<?php echo $imgpath;?>" style="position: absolute; width:220px; margin-left: 50px;" alt="Vehicle"/>
               </div>
             </div>
             <div class="row pt-3 pb-3">
               <div class="col-md-4">
-                 <label class="m-0">Name of Driver:</label><input class="text-uppercase ml-4 font-weight-bold" type="text" id="name_of_driver_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" name="registration" value="" style="border: 0px;">
+                 <label class="m-0">Driver Id:</label><input class="text-uppercase ml-4 font-weight-bold" type="text" id="name_of_driver_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" name="registration" value="<?php echo $result['driver_id'];?>" style="border: 0px;">
               </div>
               <div class="col-md-4">
                 <label class="m-0">Zone:</label><input class="text-uppercase ml-4 font-weight-bold" type="text" id="zone_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" name="registration" value="<?php echo $result['zone']; ?> " style="border: 0px;">
@@ -99,7 +102,7 @@
             </div>
             <div class="row ">
               <div class="col-md-4">
-                <label class="m-0">In Wt. (KGS):</label><input class="text-uppercase ml-4 font-weight-bold" id="in_weight_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="15160" style="border: 0px;">
+                <label class="m-0">In Wt. (KGS):</label><input class="text-uppercase ml-4 font-weight-bold" id="in_weight_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="<?php echo $result['in_weight']?>" style="border: 0px;">
               </div>
               <div class="col-md-4">
                  <label class="m-0">Type of Garbage:</label><input class="text-uppercase ml-4 font-weight-bold" id="type_of_garbage_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="<?php echo $result['garbage']; ?>" style="border: 0px;">
@@ -110,7 +113,7 @@
             </div>
             <div class="row pt-3 pb-3">
                <div class="col-md-4">
-                <label class="m-0">Out Wt. (KGS):</label><input class="text-uppercase ml-4 font-weight-bold" id="out_weight_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="6715" style="border: 0px;">
+                <label class="m-0">Out Wt. (KGS):</label><input class="text-uppercase ml-4 font-weight-bold" id="out_weight_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="<?php echo $result['out_weight']?>" style="border: 0px;">
               </div>
               <div class="col-md-4">
                 <label class="m-0">In Time:</label><input class="text-uppercase ml-4 font-weight-bold" type="text" id="in_time_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" name="registration" value="<?php echo $result['entry_time']; ?>" style="border: 0px;">
@@ -121,7 +124,7 @@
             </div>
            <div class="row">
                <div class="col-md-4">
-                <label class="m-0">Net Wt. (KGS):</label><input class="text-uppercase ml-4 font-weight-bold" id="net_weight_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="8445" style="border: 0px;">
+                <label class="m-0">Net Wt. (KGS):</label><input class="text-uppercase ml-4 font-weight-bold" id="net_weight_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="<?php echo $result['net_weight']?>" style="border: 0px;">
               </div>
               <div class="col-md-4">
                  <label class="m-0">Out Time:</label><input class="text-uppercase ml-4 font-weight-bold" id="out_time_<?php echo str_replace(" ","_",$result['vehicle_no']);?>" type="text" name="registration" value="16/06/2020 12:55:10" style="border: 0px;">

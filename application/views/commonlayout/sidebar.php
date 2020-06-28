@@ -134,7 +134,7 @@
                 <?php
                 }
                 ?>
-                <li class="nav-item nav-item-submenu">
+                <!-- <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-cog3"></i> <span>Settings</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Settings">
@@ -145,7 +145,7 @@
                         <li class="nav-item"><a href="#" class="nav-link">System Settings</a></li>
 
                     </ul>
-                </li>
+                </li> -->
                 <!-- /main -->
             </ul>
         </div>

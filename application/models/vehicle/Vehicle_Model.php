@@ -114,8 +114,7 @@ class Vehicle_Model extends CI_Model {
         }
         return $res;
     }
-    public function show_exit_vehicle_no(){
-       
+    public function show_exit_vehicle_no(){     
         $resultArray = $this->db->query("select t1.id,t1.vehicle_no,t1.vehicle_type,t1.entry_type,t2.registration_date,t1.slipno,t3.garbage,t4.zone,t1.entry_time from (select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,Max(entry_type) as entry_type,max(slipno) as slipno,max(zone_coming_id) as zone_id,max(garbage_type_id) as garbage_id,max(timestamp) as entry_time from tbl_vehicle_entry where vehicle_in_status='IN' group by vehicle_no union select max(id) as id,max(vehicle_no) as vehicle_no,max(vehicle_type) as vehicle_type,Max(entry_type) as entry_type,max(slipno) as slipno,max(zone_coming_id) as zone_id,max(garbage_type_id) as garbage_id,max(timestamp) as entry_time  from tbl_empty_vehicle_entry where vehicle_in_status='IN' group by vehicle_no) as t1 inner join tbl_private_vehicle_details as t2 on t1.vehicle_no=t2.registration_no left join tbl_master_garbage as t3 on t1.garbage_id = t3.id left join tbl_master_zone as t4 on 
             t1.zone_id=t4.id
             union 
@@ -260,10 +259,18 @@ class Vehicle_Model extends CI_Model {
                 $finalArr[$key]['fleet_agency_name']=$value['vehicle_type']=='MCD'?$value['fleet_operator']:$value['agency'];
                 $finalArr[$key]['zone_coming_from']=$this->getZone($value['zone_coming_id']);
                 $finalArr[$key]['entry_type']=$value['entry_type'];
+                $finalArr[$key]['driver_id']=$value['driver_id'];
+                $finalArr[$key]['model']=$this->getVehicleModel($value['vehicle_id'],$value['vehicle_type']);
                 $finalArr[$key]['key_entry_type']=str_replace(' ','_',$value['entry_type']);
                 $finalArr[$key]['garbage_category']=$this->getgarbage($value['garbage_type_id']);
                 $finalArr[$key]['in_weight']=$value['entry_type']=='Empty Entry'?$value['gross_weight']:$value['gross_weight'];
                 $finalArr[$key]['out_weight']=$value['entry_type']=='Empty Entry'?$outVehicledetails['grossweight']:$outVehicledetails['emptyweight'];
+                if($value['entry_type']=='Empty Entry'){
+                    $finalArr[$key]['net_weight']=$value['gross_weight']-$outVehicledetails['grossweight'];
+                }else{
+                    $finalArr[$key]['net_weight']=$value['gross_weight']-$outVehicledetails['emptyweight'];
+                }
+                $finalArr[$key]['webcam_imgpath']=$value['webcam_imgpath'];             
                 $finalArr[$key]['in_time']=!empty($value['timestamp'])?date('m/d/Y h:i A',strtotime($value['timestamp'])):'';
                 $finalArr[$key]['out_time']=!empty($outVehicledetails['timestamp'])?date('m/d/Y h:i A',strtotime($outVehicledetails['timestamp'])):'';
                 $finalArr[$key]['user_name']=!empty($value['entry_by'])?$this->getEntryBy($value['entry_by']):'';
@@ -288,6 +295,13 @@ class Vehicle_Model extends CI_Model {
         $this->db->select('registration_no');
         $result=$this->db->get_where($tbl,array('id'=>$vehicleid))->row_array();
         return $result['registration_no'];
+    }
+
+    public function getVehicleModel($vehicleid,$vehicle_type){
+        $tbl=$vehicle_type=='MCD'?'tbl_mcd_own_vehicle_details':'tbl_private_vehicle_details';
+        $this->db->select('model');
+        $result=$this->db->get_where($tbl,array('id'=>$vehicleid))->row_array();
+        return $result['model'];
     }
 
     public function getOutVehicledetails($vehicle_no,$vehicle_type,$entry_type,$vehicle_entry_id){

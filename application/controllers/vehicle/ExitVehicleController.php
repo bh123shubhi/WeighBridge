@@ -19,6 +19,7 @@ class ExitVehicleController extends CI_Controller {
             "Other Vehicle",
             "Empty Entry"];
         $this->flipentryType = array_flip($this->entryType);
+        date_default_timezone_set("Asia/Calcutta");
 
     }
 
@@ -41,8 +42,7 @@ class ExitVehicleController extends CI_Controller {
          $vehicle_entry_id = 0;
          $entry_type ='';
          if(!empty($vehicle_no_exit)){
-            $vehicle_no_arr = explode("-",$vehicle_no_exit);
-            
+            $vehicle_no_arr = explode("-",$vehicle_no_exit);            
             $vehicle_no = !empty($vehicle_no_arr[0])?$vehicle_no_arr[0]:'';
             $vehicle_type = !empty($vehicle_no_arr[1])?$vehicle_no_arr[1]:'';
             $vehicle_entry_id = !empty($vehicle_no_arr[2])?$vehicle_no_arr[2]:0;
@@ -63,9 +63,7 @@ class ExitVehicleController extends CI_Controller {
             $data['page'] = '/vehicle/vehicle_exit';
             $data['url']='/save_vehicle_exit';
             $data['status']='true';
-            $data['timestamp']=$insertresult['timestamp'];
-
-            
+            $data['timestamp']=$insertresult['timestamp'];           
         }else{
             $data['msg'] = $insertresult['msg'];
             $data['color'] = 'alert alert-danger';
@@ -84,15 +82,16 @@ class ExitVehicleController extends CI_Controller {
         $data['result'] = [];
         if(!empty($slip_data)){
             $data['result'] = json_decode(base64_decode($slip_data),true);
-            $data['result']['entry'] = array_flip($data['result']['entry']);
-            $data['result']['entry_type'] = !empty(data['result']['entry'])?$data['result']['entry'][$data['result']['entry_type']]:$data['result']['entry_type'];
+            if(isset($data['result']['entry'])){
+                $data['result']['entry'] = array_flip($data['result']['entry']);
+                $data['result']['entry_type'] = !empty(data['result']['entry'])?$data['result']['entry'][$data['result']['entry_type']]:$data['result']['entry_type'];
+            }
+
         }
-        
         $data['back_url'] = 'vehicle/vehicle_exit';
         if(strtolower($data['result']['src'])=='reg'){
            $data['back_url'] = 'vehicle/vehicle_register';
-        }
-    
+        }    
         $data['page'] = 'vehicle/print_slip';
         $this->load->view("vehicle/print_slip",$data);
     }

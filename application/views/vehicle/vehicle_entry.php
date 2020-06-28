@@ -8,11 +8,11 @@
 <!-- Page header -->
 <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
     <div class="d-flex">
-        <div class="breadcrumb"> <a href="dashboard.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a> <a href="content_page_header.html" class="breadcrumb-item active">Vehcile Entry</a> </div>
+        <div class="breadcrumb"> <a href="<?php echo base_url(); ?>dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a> <a href="<?php echo base_url(); ?>vehicle/vehicle_entry" class="breadcrumb-item active">Vehcile Entry</a> </div>
         <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a> </div>
     <div class="header-elements d-none">
         <div class="breadcrumb justify-content-center">
-            <div class="breadcrumb-elements-item dropdown p-0"> <a href="dashboard.html" class="breadcrumb-elements-item " > <i class="icon-backward2 mr-2"></i> Go Back </a> </div>
+            <div class="breadcrumb-elements-item dropdown p-0"> <a href="<?php echo base_url(); ?>dashboard" class="breadcrumb-elements-item " > <i class="icon-backward2 mr-2"></i> Go Back </a> </div>
         </div>
     </div>
 </div>
