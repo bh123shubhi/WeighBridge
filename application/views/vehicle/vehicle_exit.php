@@ -44,6 +44,10 @@
                 <input type="hidden" id="garbage" value=''/>
                 <input type="hidden" id="entry_time" value=''/>
                 <input type="hidden" id="slip_no" value=''/>
+                <input type="hidden" id="driverid" value=''/>
+                <input type="hidden" id="in_weight" value=''/>
+                 <input type="hidden" id="vehicle_img" value=''/>
+
 
          <div class="form-group row">
              <label class="col-form-label col-lg-2">Enter Vehicle No.</label>

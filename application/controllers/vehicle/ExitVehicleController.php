@@ -62,6 +62,7 @@ class ExitVehicleController extends CI_Controller {
             $data['color'] = 'alert alert-success';
             $data['page'] = '/vehicle/vehicle_exit';
             $data['url']='/save_vehicle_exit';
+            $data['out_weight']=(!empty($insertresult['grossweight'])?$insertresult['grossweight']:$insertresult['tare_weight']);
             $data['status']='true';
             $data['timestamp']=$insertresult['timestamp'];           
         }else{
@@ -70,6 +71,7 @@ class ExitVehicleController extends CI_Controller {
             $data['page'] = '/vehicle/vehicle_exit';
             $data['url']='/save_vehicle_exit';
             $data['status']='false';
+            $data['out_weight']=0;
             $data['timestamp']='';
         }       
         echo json_encode($data);
@@ -92,6 +94,7 @@ class ExitVehicleController extends CI_Controller {
         if(strtolower($data['result']['src'])=='reg'){
            $data['back_url'] = 'vehicle/vehicle_register';
         }    
+        // echo "<pre>";print_r($data);die;
         $data['page'] = 'vehicle/print_slip';
         $this->load->view("vehicle/print_slip",$data);
     }
