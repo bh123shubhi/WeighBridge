@@ -14,8 +14,7 @@ $(document).ready(function () {;
           var driverid = $(this). children("option:selected").data('driverid');
           var in_weight = $(this). children("option:selected").data('in-weight');
           var vehicle_img = $(this). children("option:selected").data('vehicle-img');
-           var model = $(this). children("option:selected").data('model');
-
+          var model = $(this). children("option:selected").data('model');
           $("#zone").val(zone_id);
           $("#garbage").val(garbage);
           $("#entry_time").val(entry_time);
@@ -45,7 +44,7 @@ $(document).ready(function () {;
     
     for(var k in items){
         var data = items[k];
-        that.append("<option data-zone='"+data.zone+"' data-garbage='"+data.garbage+"' data-entry-time='"+data.in_time+"' data-slip-no='"+data.slip_no+"' data-driverid='"+data.driverid+"' data-in-weight='"+data.in_weight+"' data-vehicle-img:'"+data.vehicle_img+"' data-model:'"+data.model+"'   value='"+ data.id +"'>"+ data.text +"</option>");
+        that.append("<option data-zone='"+data.zone+"' data-garbage='"+data.garbage+"' data-entry-time='"+data.in_time+"' data-slip-no='"+data.slip_no+"' data-driverid='"+data.driverid+"' data-in-weight='"+data.in_weight+"' data-vehicle-img='"+data.vehicle_img+"' data-model='"+data.model+"'   value='"+ data.id +"'>"+ data.text +"</option>");
     }
     $(that).val(null).trigger("change");
     that.select2(config ||{minimumInputLength:2});
@@ -80,15 +79,24 @@ $(document).ready(function () {;
                      var garbage = $("#garbage").val();
                      var entry_time = $("#entry_time").val();
                      var entry_type_id = $("#entry_type").val();
+                     if(entry_type_id==0){
+                      entry_type='General Entry';
+                     }else if(entry_type_id==1){
+                      entry_type='Other Vehicle';
+                     }else if(entry_type_id==2){
+                      entry_type='Empty Entry';
+                     }else{
+                      entry_type='';
+                     }
                      var slip_no = $("#slip_no").val();
-                      var driverid = $("#driverid").val();
-                       var in_weight = $("#in_weight").val();
-                        var vehicle_img = $("#vehicle_img").val();
-                          var model = $("#model").val();
+                     var driverid = $("#driverid").val();
+                     var in_weight = $("#in_weight").val();
+                     var vehicle_img = $("#vehicle_img").val();
+                     var model = $("#model").val();
                      postData['vehicle_no'] = vehicle_no;
                      postData['zone'] = zone;
                      postData['garbage'] = garbage;
-                     postData['entry_type'] =entry_type_id;
+                     postData['entry_type'] =entry_type;
                      postData['entry_time'] = entry_time;
                      postData['entry_type'] =entry_type;  
                      postData['slipno'] =slip_no; 
@@ -97,8 +105,8 @@ $(document).ready(function () {;
                      postData['out_weight'] =respData['out_weight'];
                      postData['net_weight'] =in_weight-respData['out_weight']; 
                      postData['exit_time'] =respData['timestamp']; 
-                      postData['model'] =respData['model']; 
-                      postData['vehicle_img'] =vehicle_img; 
+                    postData['model'] =model; 
+                    postData['vehicle_img'] =baseURL+vehicle_img; 
                     window.location = baseURL+'/vehicle/rendersliporprint/'+btoa(JSON.stringify(postData));
                     
                     //   var originalContents = document.body.innerHTML;
